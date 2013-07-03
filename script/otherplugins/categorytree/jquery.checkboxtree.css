@@ -1,0 +1,24 @@
+.ui-widget-daredevel-checkboxTree li {
+    list-style-type: none;
+    position: relative;
+}
+
+.ui-widget-daredevel-checkboxTree li span {
+    cursor: default;
+    position: absolute;
+    top: 1px;
+    left: -16px;
+}
+ul
+{
+	list-style-type:none !important;
+}
+label
+{
+	display:inline !important;
+	margin-left:10px !important;
+}
+.ui-widget-content
+{
+	border:none !important;
+}

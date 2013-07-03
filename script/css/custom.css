@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+#back
+{
+	width:50%;
+	float:left;
+}
+#forward
+{
+	width:50%;
+	float:left;
+	text-align:right;
+}
+.alert-info-green {
+    background-color: #669533;
+    border-color: #E0D9CB;
+    color: #FFFFFF;
+	font-weight:bold;
+}
+.alert-green {
+    background-color: #669533;
+    border: 1px solid #7ED0E5;
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF;
+	font-weight:bold;
+    margin-bottom: 18px;
+    padding: 8px 35px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.advancesearchdata
+{
+	width:100%;
+	text-align:right;
+	padding-right:20px;
+}
+.column-filter-widgets
+{
+	display:none;
+}
+.dataTables_length
+{
+	width:50%;
+	float:left;
+	margin-top:5px;
+}
+.dataTables_filter
+{
+	float:left;
+	width:50%;
+	text-align:right;
+	margin-top:5px;
+}
+.search_init
+{
+	width:100px;
+}
+.waiting
+{
+	display:none;
+}
+.waitings
+{
+			display: block;	
+			visibility: visible;
+			position: absolute;
+			z-index: 999;
+			top: 0px;
+			left: 0px;
+			width: 105%;
+			height: 105%;
+			background-color: #ccc;
+			text-align: center;
+			padding-top: 20%;
+			filter: alpha(opacity=75);
+			opacity: 0.75;
+}
