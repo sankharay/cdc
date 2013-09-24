@@ -35,7 +35,7 @@
 						  <thead>
 							  <tr>
 								  <th>&nbsp;</th>
-								  <th width='250px'>Product Name</th>
+								  <th>Product Name</th>
 								  <th>Product SKU</th>
 								  <th>Product UPC</th>
 								  <th>Brand</th>
@@ -75,7 +75,6 @@
 										'3'=>"Normal",
 										'4'=>"High",
 										'5'=>"Critical",
-										'6'=>"Catalog"
 												);
 								echo $datapri[$value->priority];
 								?>
@@ -90,10 +89,8 @@
 								if($value->inmagento == 1 OR $value->inmagento == 4)
 								{
 									?>
-<a href="<?php echo BASE_URL; ?>/addcontent/viewproductothers/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Raw View</button></a>&nbsp;<br /><a href="<?php echo BASE_URL; ?>/addcontent/viewproductothersqa/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Check QA</button></a>&nbsp;<br /><a href="<?php echo BASE_URL; ?>/addcontent/qafaileduser/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-danger">QA Failed</button></a>
-&nbsp;<br />
-<!-- <a href="<?php echo BASE_URL; ?>/addcontent/addreviewspanish/<?php echo $value->mpt_id; ?>"><button class="btn btn-mini btn-success">Process Data</button></a><br /> -->
-<a href="<?php echo BASE_URL; ?>/addcontentenglish/addreviewenglish/<?php echo $value->mpt_id; ?>"><button class="btn btn-mini btn-success">Process English Data</button></a>
+<a href="<?php echo BASE_URL; ?>/addcontent/viewproductothers/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Raw View</button></a>&nbsp;<br /><a href="<?php echo BASE_URL; ?>/addcontent/viewproductothersqa/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Check QA</button></a>&nbsp;<br /><a href="<?php echo BASE_URL; ?>/addcontent/qafaileduser/<?php echo $value->mpt_id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">QA Failed</button></a>
+&nbsp;<br /><a href="<?php echo BASE_URL; ?>/addcontent/addreviewspanish/<?php echo $value->mpt_id; ?>"><button class="btn btn-mini btn-primary">Process Data</button></a>
                                     <!-- <a href="<?php echo BASE_URL; ?>/addcontent/addreviewspanish/<?php echo $value->mpt_id; ?>" class="btn btn-success">
 										<i class="icon icon-white icon-check"></i>
 									</a>-->

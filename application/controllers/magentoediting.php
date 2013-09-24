@@ -33,15 +33,20 @@ class magentoediting extends CI_Controller {
 	
 	function mproductlisting()
 	{
-	$this->load->model('addcontentm');
-	$fplid = $this->uri->segment(3);
-	$data['disclaimer']= $this->addcontentm->get_disclaimer();
-	$data['branddropdown'] = $this->addcontentm->get_brand_dropdown();
-	$data['english_content'] = $this->magentoeditingm->getothersenglishproductsqa($fplid);
-	$data['spanish_content'] = $this->magentoeditingm->getotherspanishproductspqa($fplid);
-	$this->load->view("header");
-	$this->load->view("mproductlistingv",$data);
-	$this->load->view("footer");
+		$fpl_id = $this->uri->segment(3);
+		if($this->input->post())
+		{
+		$this->magentoeditingm->insert_attributes($fpl_id);
+		}
+		$data['content'] = $this->magentoeditingm->browse_english_product($fpl_id);
+		$sppr_id = $this->magentoeditingm->get_spanish_id($fpl_id);
+		$data['contents'] = $this->magentoeditingm->browse_spanish_product($sppr_id);
+		$data['selected_category'] = $this->magentoeditingm->get_selected_categories($fpl_id);
+		$data['branddropdown'] = $this->magentoeditingm->list_brands();
+		$data['disclaimerdropdown'] = $this->magentoeditingm->list_disclaimers();
+		$this->load->view('header');
+		$this->load->view('mproducteditingv',$data);
+		$this->load->view('footer');
 	}
 	
 	function editrpdoducttosend()
@@ -94,20 +99,6 @@ class magentoediting extends CI_Controller {
 	echo "Data Updated";
 	else
 	echo "Data Not Updated";
-	}
-	}
-	
-	
-	function onlyenglishready()
-	{
-	if($this->input->post('category'))
-	{
-		$update = $this->magentoeditingm->updatecontentdone();
-		if($update)
-		{
-		redirect(BASE_URL.'/contentsearch/pending/');
-		exit;
-		}
 	}
 	}
 	

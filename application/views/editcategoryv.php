@@ -14,7 +14,7 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td><input type="submit" name="submit" class="btn btn-primary" value="Update Category"></td>
+    <td><input type="submit" name="submit" class="btn btn-primary" value="Edit Category"></td>
   </tr>
 </table>
 </form>

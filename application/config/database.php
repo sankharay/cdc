@@ -45,25 +45,6 @@
 | the active record class
 */
 
-/* FORUM */
-$active_group = "forum";
-$active_record = TRUE;
-
-$db['forum']['hostname'] = "localhost";
-$db['forum']['username'] = "demo";
-$db['forum']['password'] = "demo";
-$db['forum']['database'] = "history";
-$db['forum']['dbdriver'] = "mysql";
-$db['forum']['dbprefix'] = "";
-$db['forum']['pconnect'] = TRUE;
-$db['forum']['db_debug'] = TRUE;
-$db['forum']['cache_on'] = FALSE;
-$db['forum']['cachedir'] = "";
-$db['forum']['char_set'] = "utf8";
-$db['forum']['dbcollat'] = "utf8_general_ci";
-
-// secondary Database ends
-
 $active_group = 'default';
 $active_record = TRUE;
 
@@ -78,15 +59,10 @@ $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'latin1_swedish_ci';
+$db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
-// second content
-
-
-
 
 
 /* End of file database.php */

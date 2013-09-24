@@ -49,10 +49,6 @@
                             <td><?php echo $filename->filename; ?></td>
                           </tr>
                           <tr>
-                            <td>Enter  Attribute Field Numbers </td>
-                            <td><input type="text" name="attributes" id="attributes" value="" />&nbsp;&nbsp;<a data-content="ADD fields seprated by Comma" data-rel="popover" class="label label-success" href="#" >?</a></td>
-                          </tr>
-                          <tr>
                             <td>Select User</td>
                             <td><select id="user" style="width:100px;" name="user">
                                   <option value="">Select User</option>

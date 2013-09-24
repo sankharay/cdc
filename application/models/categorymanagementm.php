@@ -12,7 +12,6 @@ class categorymanagementm extends CI_Model
         $this->db->select("*");
 		$this->db->where("status",1);
 		$this->db->from("categories");
-		$this->db->group_by("magento_category_id");
 		$data = $this->db->get();
 		return $data->result();
 	}
@@ -56,26 +55,6 @@ class categorymanagementm extends CI_Model
 		return $select.= "</select>";
 	}
 	
-    function listcatdropdownselected($id)
-    {
-        $this->db->select("*");
-		$this->db->from("categories");
-		$this->db->group_by('magento_category_id');
-		$data = $this->db->get();
-		$datas = $data->result();
-		$select = "<select name='parentcatid'>";
-		$select.= "<option value=''>Please select Parent Category</option>";
-		foreach($datas as $value)
-		{
-		if($id == "$value->id" )
-		$selection= 'selected=selected';
-		else
-		echo $selection= "";
-		$select.= "<option $selection value='".$value->id."'>".$value->name."</option>";
-		}
-		return $select.= "</select>";
-	}
-	
     function listselectedcatdropdown($id)
     {
         $this->db->select("*");
@@ -96,41 +75,29 @@ class categorymanagementm extends CI_Model
 		return $select.= "</select>";
 	}
 	
-	function insertcat($catname,$cattitle,$parentcatid,$magengDesc,$imagename,$magspanishname,$metaKeywords,$metaDescription,$smetaKeywords,$smetaDescription)
+	function insertcat($catname,$parentcatid,$magengDesc,$imagename,$magspanishname)
 	{
-	
 	$dataarray = array (
 				'name' =>$catname,
-				'cattitle' =>$cattitle,
 				'parent_id' =>$parentcatid,
 				'categorydes' =>$magengDesc,
 				'image' =>$imagename,
-				'metakeywords' =>$metaKeywords,
-				'metadescrption' =>$metaDescription,
-				'spanish_metakeywords' =>$smetaKeywords,
-				'spanish_metadescription' =>$smetaDescription,
-				'spanish_name' => $magspanishname,
-				'status' => '1'
+				'spanish_name' => $magspanishname
 						);
 	$this->db->insert('categories',$dataarray);
 	return $this->db->insert_id();
 	}
 	
-	function updatecat($catname,$cattitle,$parentcatid,$magengDesc,$imagename,$magspanishname,$metaKeywords,$metaDescription,$smetaKeywords,$smetaDescription,$status,$catid)
+	function updatecat($catid,$catname,$parentcatid,$magengid,$magspaid,$magspanishname)
 	{
 	$dataarray = array (
 				'name' =>$catname,
-				'cattitle' =>$cattitle,
 				'parent_id' =>$parentcatid,
-				'categorydes' =>$magengDesc,
-				'image' =>$imagename,
-				'metakeywords' =>$metaKeywords,
-				'metadescrption' =>$metaDescription,
-				'spanish_metakeywords' =>$smetaKeywords,
-				'spanish_metadescription' =>$smetaDescription,
-				'spanish_name' => $magspanishname,
-				'status' => $status
+				'magento_category_id' =>$magengid,
+				'magento_cat_spenish_id' =>$magspaid,
+				'spanish_name' => $magspanishname
 						);
+	$this->db->where("status",1);
 	$this->db->where('id',$catid);
 	$result = $this->db->update('categories',$dataarray);
 	return $result;
@@ -162,6 +129,7 @@ class categorymanagementm extends CI_Model
     function catexist($id)
     {
         $this->db->select("*");
+		$this->db->where("status",1);
 		$this->db->from("categories");
 		$this->db->where("id",$id);
 		$data = $this->db->get();
@@ -174,6 +142,7 @@ class categorymanagementm extends CI_Model
 	function catdetail($catid)
 	{
         $this->db->select("*");
+		$this->db->where("status",1);
 		$this->db->from("categories");
 		$this->db->where("id",$catid);
 		$this->db->limit('1');

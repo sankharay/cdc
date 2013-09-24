@@ -48,6 +48,6 @@ define('PLUGINS_WEB_URL',		'http://localhost/app/script/otherplugins');
 define('UPLOADEDFILES_URL',		'C:/xampp/htdocs/app/script/uploadedfiles');
 define('IMAGE_RESIZE_WIDTH',		'800');
 define('IMAGE_RESIZE_HEIGHT',		'600');
-define('MAGE_FILE_URL','C:/xampp/htdocs/new_magento');
+define('MAGE_FILE_URL','C:/xampp/htdocs/magento/');
 define('IMAGES_LOCATION_CDC_URL','C:/xampp/htdocs/app/script/otherplugins/cropping');
 define('IMAGES_LOCATION_CDC_WEB_URL','http://localhost/app/script/otherplugins/cropping');

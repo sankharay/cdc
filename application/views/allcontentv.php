@@ -171,40 +171,7 @@ echo "Content not assigned";
                       <table class="table table-striped table-bordered bootstrap-datatable">
 						  <thead>
 							  <tr>
-
-<td width="25%">
-<!-- reject content start -->
-<button class="btn btn btn-primary" onclick="return trashAllcontent('<?php echo BASE_URL; ?>')"><i class="icon-arrow-up icon-white"></i><span>Reject Content</span></button>
-<script>
-function trashAllcontent(url){
-	
-	$("#ajaxcontentbg").hide('slow')
-	$("#prioritydiv").hide('slow')
-	$("#notify").html('<img src='+url+'/img/loader.gif>');
-	if($(':checkbox.productcheck:checked').length>0){
-		 var allVals = [];
-				 $(':checkbox.productcheck:checked').each(function() {
-				   allVals.push($(this).val());
-				 });
-	var userid = "20";
-	if(userid == "")
-	{
-		alert("Select User");
-		$("#notify").html('<h4 class="alert_warning">Please select user</h4>')
-	}
-	else
-	{
-		$("#notify").load(url+'/trashcontent/index/?vals='+allVals);
-		return false;
-	}
-	}else{
-		$("#notify").html('<h4 class="alert_warning">Please select product</h4>')
-	}
-	return false;
-}
-</script>
-<!-- reject content ends -->
-</td>
+								  <td width="25%">&nbsp;</td>
 								  <td width="10%">&nbsp;</td>
 								  <td width="10%">&nbsp;</td>
 								  <td width="10%">
@@ -227,7 +194,6 @@ function trashAllcontent(url){
                                         <option value="3">Normal</option>
                                         <option value="4">High</option>
                                         <option value="5">Critical</option>
-                                        <option value="6">Catalog</option>
             						  </select>
                                       <div id="notify"></div></td>
 								  <td width="30%"><button class="btn btn btn-primary" onclick="return processAlls()"><i class="icon-arrow-up icon-white"></i><span>Process Content</span></button></td>

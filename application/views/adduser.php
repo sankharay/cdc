@@ -12,7 +12,7 @@
 			<div>
 				<ul class="breadcrumb">
 					<li>
-						<a href="#">Home</a> > <a href="<?php echo BASE_URL; ?>/adduser/listusers">Manage Users</a>
+						<a href="#">Home</a> 
 					</li>
 				</ul>
 			</div>
@@ -78,7 +78,6 @@
                             <option value="2">Manager</option>
                             <option value="3">User</option>
                             <option value="4">Other Company</option>
-                            <option value="5">Magento Inventory User</option>
                             </select></td>
 							  </tr>
 							  <tr>

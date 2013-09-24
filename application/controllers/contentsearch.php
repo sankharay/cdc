@@ -22,17 +22,6 @@ class Contentsearch extends CI_Controller {
 	$this->load->view("contentsearchv",$data);
 	$this->load->view("footer");
 	}
-	
-	function pendingurgent()
-	{
-	$activity = " Pending Local Data Access";
-	$this->log->logdata($activity);
-	$this->load->model("contentsearchm");
-	$data['content'] = $this->contentsearchm->pending_urgent_products();
-	$this->load->view("header");
-	$this->load->view("pendingproductsv",$data);
-	$this->load->view("footer");
-	}
 	 
 	function allcontent()
 	{
@@ -43,17 +32,6 @@ class Contentsearch extends CI_Controller {
 	$data['content'] = $this->contentsearchm->search_products();
 	$this->load->view("header");
 	$this->load->view("allcontentv",$data);
-	$this->load->view("footer");
-	}
-	
-	function inprocessing()
-	{
-	$activity = " Pending Content";
-	$this->log->logdata($activity);
-	$this->load->model("contentsearchm");
-	$data['content'] = $this->contentsearchm->inprocessing_products();
-	$this->load->view("header");
-	$this->load->view("inprocessingv",$data);
 	$this->load->view("footer");
 	}
 	
@@ -180,7 +158,7 @@ class Contentsearch extends CI_Controller {
 	$this->log->logdata($activity);
 	$this->load->model("contentsearchm");
 	$data['disclaimer']= $this->contentsearchm->get_disclaimer();
-	$data['sku'] = $this->input->get('sku');
+	$data['sku'] = $this->uri->segment(3);
 	$this->load->view("header");
 	$this->load->view("reviewspanishv",$data);
 	$this->load->view("footer");

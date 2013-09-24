@@ -37,8 +37,6 @@ class reporting extends CI_Controller {
 	$userid = $this->input->get('userid');
 	$fromDate = $this->input->get('fromDate');
 	$toDate = $this->input->get('toDate');
-	$fromDate  = date("Y-m-d", strtotime($fromDate ));
-	$toDate  = date("Y-m-d", strtotime($toDate ));
 	if($fromDate > $toDate )
 	{
 	echo "From Date Can't More then TO date";
@@ -50,8 +48,6 @@ class reporting extends CI_Controller {
 	$data['spanishreadhy'] = $this->reportingm->get_data_spanish_ready($userid,$fromDate,$toDate);
 	$data['dataunderprocessing'] = $this->reportingm->get_data_processing_ready($userid,$fromDate,$toDate);
 	$data['dataunderpending'] = $this->reportingm->get_data_pending_ready($userid,$fromDate,$toDate);
-	$data['skurejected'] = $this->reportingm->countreject($userid,$fromDate,$toDate);
-	$data['skuready'] = $this->reportingm->get_data_ready_ready($userid,$fromDate,$toDate);
 	$this->load->view('reportingshow',$data);
 	}
 	}
