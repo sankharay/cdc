@@ -47,6 +47,7 @@ foreach($userdata as $row)
                             <option value="2"<?php if($row->access_level == 2) { echo "selected='selected'";  } ?>>Manager</option>
                             <option value="3"<?php if($row->access_level == 3) { echo "selected='selected'";  } ?>>User</option>
                             <option value="4"<?php if($row->access_level == 4) { echo "selected='selected'";  } ?>>Other Company</option>
+                            <option value="5"<?php if($row->access_level == 5) { echo "selected='selected'";  } ?>>Magento Inventory User</option>
                             </select>
 	</td>
   </tr>

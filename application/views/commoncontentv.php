@@ -64,17 +64,20 @@
 							  
 							<tr>
 							  <td><?php echo $this->attributemanagementm->get_category_name($value->categoryid); ?></td>
-								<td><?php echo $value->metakeywords; ?></td>
+								<td><?php echo $value->metakeywords; ?>
+<br><br><label><b>Spanish Keywords:</b></label><br><?php echo $value->spanish_metakeywords; ?>
+</td>
 <td class="center">
 <?php 
 echo $value->metadescription;
 
 ?>
+<br><br><label><b>Spanish Description:</b></label><br><?php echo $value->spanish_metadescription; ?>
 </td>
 								<td class="center">
 <a href="<?php echo BASE_URL; ?>/attributemanagement/editcommoncontent/<?php echo $value->id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Edit</button></a>
 &nbsp;&nbsp;
-<a href="<?php echo BASE_URL; ?>/attributemanagement/deletecommoncontent/<?php echo $value->id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Delete</button></a>
+<!--<a href="<?php echo BASE_URL; ?>/attributemanagement/deletecommoncontent/<?php echo $value->id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Delete</button></a>-->
 							    </td>
 								<td class="center">
                                 <span class="label label-success">

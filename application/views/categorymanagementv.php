@@ -19,7 +19,19 @@
 			</div>
 
 			<div class="row-fluid sortable">
-				
+				<?php
+				if($this->session->userdata('update'))
+				{
+					?>
+                    <div class="alert alert-error">
+							<button data-dismiss="alert" class="close" type="button">×</button>
+							
+                            <strong><?php echo $this->session->userdata('update'); 	
+							$this->session->unset_userdata('update');	?> </strong>
+						</div>
+                    <?php
+				}
+				?>
 				<div class="box">
 					<div class="box-header well">
 						<h2><i class="icon-list-alt"></i>Category Management</h2>
@@ -30,7 +42,8 @@
 						</div>
 					</div>
 				  <div class="box-content">
-                    <div class="advancesearchdata"><button class="btn btn-mini btn-primary" id="asearch">Advance Search</button></div>
+                    <div class="advancesearchdata"><button class="btn btn-mini btn-primary" id="asearch">Advance Search</button>&nbsp;
+<a href="<?php echo PLUGINS_WEB_URL."/categorytree/index.php" ?>" target="_blank"><button class="btn btn-mini btn-primary">Category Tree</button></a></div>
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
                         
                           
@@ -61,7 +74,10 @@
 <td class="center"><?php echo $value->categorydes; ?> 
 
  </td>
-<td class="center"><img src="<?php echo PLUGINS_WEB_URL.'/cropping/categories/'.$value->image; ?>" height="50" width="50" /></td>
+<td class="center">
+<!-- <img src="<?php echo PLUGINS_WEB_URL.'/cropping/categories/'.$value->image; ?>" height="50" width="50" />-->
+<img src="<?php echo $value->image; ?>" height="50" width="50" />
+</td>
 								<td class="center">
   <?php echo $value->spanish_name; ?>
 							    </td>
@@ -146,31 +162,51 @@ else
 						  <tbody>
 							  <tr>
 								  <td>Category Name</td>
-								  <td><input type="text" name="catname" required="required" /></td>
+								  <td colspan="2"><input type="text" name="catname" required="required" /></td>
+							  </tr>
+							  <tr>
+								  <td>Category Title</td>
+								  <td colspan="2"><input type="text" name="cattitle" id="cattitle" required="required" /></td>
 							  </tr>
 							  <tr>
     <td>Select Cat. Parent</td>
-    <td><?php echo $this->categorymanagementm->listcatdropdown(); ?></td>
+    <td colspan="2"><?php echo $this->categorymanagementm->listcatdropdown(); ?></td>
 						    </tr>
 							  <tr>
 							    <td>Category Description</td>
-							    <td>
-<textarea rows="10" cols="70" name="magengDesc"  id="magengDesc" required="required"></textarea>
+							    <td colspan="2">
+<textarea rows="10" cols="70" name="magengDesc"  id="magengDesc" required="required" class="span9"></textarea>
 							</td>
 						    </tr>
 							  <tr>
-							    <td>Magento Category Image</td>
+							    <td colspan="2">
+<label>Meta Keywords</label>
+  <textarea rows="8" cols="70" name="metaKeywords"  id="metaKeywords" required="required" class="span10"></textarea>						        </td>
 							    <td>
-<input type="file" name="userfile" size="20" required="required" pattern="jpg,gif,png only">
+<label>Spanish Meta Keywords</label>
+<textarea rows="8" cols="70" name="smetaKeywords"  id="smetaKeywords" required="required" class="span10"></textarea></td>
+					        </tr>
+							  <tr>
+							    <td colspan="2">
+<label>Meta Description</label>
+						        <textarea rows="8" cols="70" name="metaDescription"  id="metaDescription" required="required" class="span10"></textarea>						        </td>
+							    <td>
+<label>Spanish Meta Description</label>
+                                <textarea rows="8" cols="70" name="smetaDescription"  id="smetaDescription" required="required" class="span10"></textarea></td>
+					        </tr>
+							  <tr>
+							    <td>Magento Category Image</td>
+							    <td colspan="2">
+<input type="file" name="userfile" size="20" pattern="jpg,gif,png only">
                                 </td>
 						    </tr>
 							  <tr>
 							    <td>Spanish Name</td>
-							    <td><input type="text" name="magspanishname" required="required" /></td>
+							    <td colspan="2"><input type="text" name="magspanishname" required="required" /></td>
 						    </tr>
 							  <tr>
 							    <td>&nbsp;</td>
-							    <td><input class="btn" type="submit" name="submit" value="Add Category" /></td>
+							    <td colspan="2"><input class="btn" type="submit" name="submit" value="Add Category" /></td>
 						    </tr>
                               </tbody>
                               </table>

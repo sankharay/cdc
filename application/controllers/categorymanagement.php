@@ -31,17 +31,23 @@ class categorymanagement extends CI_Controller {
 		 {
 			$this->load->helper('form');
 			$catname = $this->input->post('catname');
+			$cattitle = $this->input->post('cattitle');
 			$parentcatid = $this->input->post('parentcatid');
 			$magengDesc = $this->input->post('magengDesc');
+			$metaKeywords = $this->input->post('metaKeywords');
+			$metaDescription = $this->input->post('metaDescription');
+			$smetaKeywords = $this->input->post('smetaKeywords');
+			$smetaDescription = $this->input->post('smetaDescription');
 			$magspanishname = $this->input->post('magspanishname');
 			// image Uploading start 
 			$config['upload_path'] = PLUGINS_URL.'/cropping/categories/';
 			$config['allowed_types'] = 'jpg';
-			$config['max_size']	= '10000';
+			$config['max_size']	= '100000000000000000000000000000000';
 			$config['max_width']  = '2024';
 			$config['max_height']  = '2068';
 			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload())
+			$fileeename = TRUE;
+		if (!$fileeename)
 		{
 		$this->session->set_userdata('updated',$this->upload->display_errors());
 		}
@@ -49,7 +55,7 @@ class categorymanagement extends CI_Controller {
 		{
 			$imagedata = $this->upload->data();
 			$imagename = $imagedata['file_name'];
-			$catid = $this->categorymanagementm->insertcat($catname,$parentcatid,$magengDesc,$imagename,$magspanishname);
+			$catid = $this->categorymanagementm->insertcat($catname,$cattitle,$parentcatid,$magengDesc,$imagename,$magspanishname,$metaKeywords,$metaDescription,$smetaKeywords,$smetaDescription);
 			$whatupdate = 1;
 			$this->log->cdcupdate($catid,$whatupdate);
 		}
@@ -67,14 +73,56 @@ class categorymanagement extends CI_Controller {
 	$checkcat = $this->categorymanagementm->catexist($catid);
 		 if($this->input->post())
 		 {
+			$this->load->helper('form');
 			$catname = $this->input->post('catname');
+			$cattitle = $this->input->post('cattitle');
 			$parentcatid = $this->input->post('parentcatid');
-			$magengid = $this->input->post('magengid');
-			$magspaid = $this->input->post('magspaid');
+			$magengDesc = $this->input->post('magengDesc');
+			$metaKeywords = $this->input->post('metaKeywords');
+			$metaDescription = $this->input->post('metaDescription');
+			$smetaKeywords = $this->input->post('smetaKeywords');
+			$smetaDescription = $this->input->post('smetaDescription');
+			$status = $this->input->post('catstatus');
 			$magspanishname = $this->input->post('magspanishname');
-			$update = $this->categorymanagementm->updatecat($catid,$catname,$parentcatid,$magengid,$magspaid,$magspanishname);
-			if($update)
+			if($this->input->post('userfile'))
+			{
+			// image Uploading start 
+			$config['upload_path'] = PLUGINS_URL.'/cropping/categories/';
+			$config['allowed_types'] = 'jpg';
+			$config['max_size']	= '100000000000000000000000000000000';
+			$config['max_width']  = '2024';
+			$config['max_height']  = '2068';
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload())
+		{
+		$this->session->set_userdata('updated',$this->upload->display_errors());
+		$this->session->set_userdata('updated','Category Not Updated');
+		redirect(BASE_URL."/categorymanagement/");
+		}
+		else
+		{
+			$imagedata = $this->upload->data();
+			$imagename = $imagedata['file_name'];	
+		}
+			}
+			else
+			{
+				$imagename="";
+			}
+			$catupdateid = $this->categorymanagementm->updatecat($catname,$cattitle,$parentcatid,$magengDesc,$imagename,$magspanishname,$metaKeywords,$metaDescription,$smetaKeywords,$smetaDescription,$status,$catid);
+			if($catupdateid)
+			{
+			$whatupdate = 2;
+			$this->log->cdcupdate($catid,$whatupdate);
+			$this->session->set_userdata('updated','Category Updated');
 			redirect(BASE_URL."/categorymanagement/");
+			}
+			else
+			{
+			$this->session->set_userdata('updated','Category Not Updated');
+			redirect(BASE_URL."/categorymanagement/");
+			}
+			// Image Uploading ends
 		 }
 		 $data['content'] = $this->categorymanagementm->catdetail($catid);
 		 $this->load->view("header");

@@ -24,9 +24,7 @@
 					<div class="box-header well">
 						<h2><i class="icon-list-alt"></i> Magento Ready</h2>
 						<div class="box-icon">
-							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
@@ -65,13 +63,25 @@
 									</a>
 								</td>
 								<td class="center">
-<button class="btn btn-mini btn-primary" onclick="myPopup2('<?php echo PLUGINS_WEB_URL; ?>/categorytree/index_pop.php?fpl_id=<?php echo $value->fpl_id; ?>&product_sku=<?php echo trim($value->product_sku); ?>&product_source=<?php echo trim($value->product_source); ?>')">Add Related Products</button>
-<a class="cboxElement" href="<?php echo BASE_URL; ?>/addonmanagement/checkaddons/<?php echo $value->fpl_id; ?>/<?php echo trim($value->product_sku); ?>/<?php echo trim($value->product_source); ?>"><button class="btn btn-mini btn-primary cboxElement" >Check Related Products</button></a>
+<!-- <button class="btn btn-mini btn-success" onclick="myPopup2('<?php echo PLUGINS_WEB_URL; ?>/categorytree/index_pop.php?fpl_id=<?php echo $value->fpl_id; ?>&product_sku=<?php echo trim($value->product_sku); ?>&product_source=<?php echo trim($value->product_source); ?>')">Add Related Products</button>-->
+<a class="cboxElement" href="<?php echo BASE_URL; ?>/addrelatedproducts/index/<?php echo $value->fpl_id; ?>">
+<button class="btn btn-mini btn-primary">Add Related Products</button></a>
+<a class="cboxElement" href="<?php echo BASE_URL; ?>/addonmanagement/checkaddons/<?php echo $value->fpl_id; ?>"><button class="btn btn-mini btn-primary cboxElement" >Check Related Products</button></a>
 								</td>
 								<td class="center">
 				<div id="updating">
-                <button class="btn btn-mini btn-primary" onclick="send_magento('<?php echo PLUGINS_WEB_URL; ?>','<?php echo $value->fpl_id; ?>');">Send to Magento</button>&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/index.php?fpl_id=<?php echo $value->fpl_id; ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Preview</button></a>&nbsp;&nbsp;
-                    &nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/spanish_index.php?fpl_id=<?php echo $value->fpl_id; ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Spanish Preview</button></a></div>
+<?php 
+if($value->status == 1)
+{ ?>
+<a href="<?php echo  BASE_URL; ?>/addcontentenglish/editreviewenglish/<?php echo $value->fpl_id; ?>/1"><button class="btn btn-mini btn-primary" id="finalproductview">Edit Product</button></a>&nbsp;&nbsp;
+<button class="btn btn-mini  btn-info btn-setting" onclick="send_magento('<?php echo PLUGINS_WEB_URL; ?>','<?php echo $value->fpl_id; ?>');">Send to Magento</button>
+<button class="btn btn-mini  btn-info btn-setting" onclick="send_magento_staging('<?php echo PLUGINS_WEB_URL; ?>','<?php echo $value->fpl_id; ?>');">Send to Staging</button>
+<?php } else { ?>
+<a href="<?php echo  BASE_URL; ?>/addcontentenglish/editreviewenglish/<?php echo $value->fpl_id; ?>/1"><button class="btn btn-mini btn-primary" id="finalproductview">Edit Product</button></a>&nbsp;&nbsp;
+<button class="btn btn-mini  btn-info btn-setting" onclick="edit_magento('<?php echo PLUGINS_WEB_URL; ?>','<?php echo $value->fpl_id; ?>');">Edit to Magento</button>
+<?php } ?>
+&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/index.php?fpl_id=<?php echo $value->fpl_id; ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Preview</button></a>&nbsp;&nbsp;
+                    &nbsp;&nbsp;<!--<a href="<?php echo BASE_URL; ?>/productpreview/spanish_index.php?fpl_id=<?php echo $value->fpl_id; ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Spanish Preview</button></a>--></div>
 <div id="magentoupdatedone" style="display:none;">DONE</div>
 								</td>
 							</tr>
@@ -120,3 +130,44 @@
 		<hr>
 
 		
+
+		<script>
+		
+// magento section starts
+function send_magento_staging(url,fpl_id){
+	// $('#s'+id).htmlarea('updateHtmlArea','');
+	$("#waiting").removeClass("waiting");
+	$("#waiting").addClass("waitings");
+	$.ajax({
+		  type: "GET",
+		  url: url+"/magentomanagement/savedatatomagento_staging_editing.php",
+		  data: { fpl_id: fpl_id }
+		}).done(function( msg ) {
+		  // alert( "Data Send: " + msg );
+		 if(msg = 1){
+			alert("Data send to magento")
+			$("#updating").hide();
+			$("#magentoupdatedone").show();
+			$("#waiting").removeClass("waitings");
+			$("#waiting").addClass("waiting");		
+			window.location.reload(true);
+			
+		}
+		else if(msg = 2)
+		{
+			alert("Data Updated in Magento");
+			$("#waiting").removeClass("waitings");
+			$("#waiting").addClass("waiting");		
+			window.location.reload(true);
+		}else
+		{
+			alert("Data Not send Please try after some time");
+			$("#waiting").removeClass("waitings");
+			$("#waiting").addClass("waiting");		
+			window.location.reload(true);
+		}
+		
+		 
+		});
+}
+</script>

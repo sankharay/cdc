@@ -12,7 +12,7 @@
 			<div>
 				<ul class="breadcrumb">
 					<li>
-						<a href="<?php echo BASE_URL; ?>">Home</a> 
+						<a href="<?php echo BASE_URL; ?>">Home</a>  > <a href="<?php echo BASE_URL; ?>/managevendor/viewvendors">Manage Vendor</a> 
                         
 					</li>
 				</ul>

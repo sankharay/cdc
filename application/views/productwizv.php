@@ -131,7 +131,7 @@
                            
                            <div id="backforth">
                         	<div id="back">
-                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step2')" />
+                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step1')" />
                             </div>
                             <div id="forward">
                                 <img src="<?php echo BASE_URL; ?>/img/next.jpg" onClick="return nextStep('step3')"/>                            
@@ -164,7 +164,7 @@
                                         <td valign="top">Short Description</td><td valign="top">
 										<?php for($i=0;$i<$num;$i++){?>
 										<label class="radio"><input type="radio" required name="pdesc"  onclick="return placehtml('psdsc<?php echo $i?>','psdesc')"></label>
-<div id="psdsc<?php echo $i?>"><?php echo $content['psdesc'][$i]; ?></div><br /><?php }?></td>                  	
+<div id="psdsc<?php echo $i?>"><?php echo substr($content['pdesc'][$i],0,200); ?></div><br /><?php }?></td>
 <td valign="top"><textarea name="finalpsdesc" id="psdesc" class="cleditor"></textarea></td>
                                          
                                          </tr>
@@ -174,7 +174,7 @@
                            
                            <div id="backforth">
                         	<div id="back">
-                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step1')" />
+                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step2')" />
                             </div>
                             <div id="forward">
                                 <img src="<?php echo BASE_URL; ?>/img/next.jpg" onClick="return nextStep('step4')"/>                            
@@ -220,7 +220,7 @@
                            
                            <div id="backforth">
                         	<div id="back">
-                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step4')" />
+                            	<img src="<?php echo BASE_URL; ?>/img/previous.jpg" onClick="return nextStep('step3')" />
                             </div>
                             <div id="forward">
                                 

@@ -20,9 +20,8 @@ class Home extends CI_Controller {
 	 
 	 function __construct(){
         // Note that there are (2) underscores (_)
-           parent::__construct();  // Should always be the first thing you call.
-		   $error[] = array();
-		   $error_value = FALSE;
+           parent::__construct();
+		   $this->load->model('reportingm');
     }
 	
 	function index()

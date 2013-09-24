@@ -6,7 +6,7 @@ class addfinalproductdata extends CI_Controller {
         parent::__construct(); 
 		$this->load->model('log');
 		$this->load->model('addfinalproductdatam');
-		   $this->load->library('image_lib');
+		$this->load->library('image_lib');
 		require_once(PLUGINS_URL.'/apiClient.php');
 		require_once(PLUGINS_URL.'/contrib/apiTranslateService.php');
 		require_once(PLUGINS_URL.'/LanguageTranslator.php');
@@ -26,7 +26,7 @@ class addfinalproductdata extends CI_Controller {
 		{
 		$config['upload_path'] = UPLOADEDFILES_URL.'/useruploadfiles/';
 		$config['allowed_types'] = 'xls';
-		$config['max_size']	= '100';
+		$config['max_size']	= '10000000000';
 		
 		$this->load->library('upload', $config);
 
@@ -70,6 +70,11 @@ class addfinalproductdata extends CI_Controller {
 		 $fileid = $this->input->get('fileid');
 		 $vendorid = $this->input->get('vendorid');
 		 $userid = $this->session->userdata('user_id');
+		 $attributes=$this->input->get('attributes');
+		 if(isset($attributes))
+		 $attributes = $this->input->get('attributes');
+		 else
+		 $attributes = "";
 		 $vendoruserid = $this->input->get('vendoruserid');
 		 // update file records start
 		 $updatefilerecord = $this->addfinalproductdatam->updatefilerecord($fileid,$userid);
@@ -90,7 +95,7 @@ class addfinalproductdata extends CI_Controller {
 		 if($validateexcel == TRUE)
 		 {
 			 // everything okay file is okay
-			 $result = $this->addfinalproductdatam->senddatatodb($vendorfilename->filename,$vendortemplatedetails,$vendorid,$vendoruserid);
+			 $result = $this->addfinalproductdatam->senddatatodb($vendorfilename->filename,$vendortemplatedetails,$vendorid,$vendoruserid,$attributes);
 			 echo "Product Inserted Successfully";
 		 }
 		 else

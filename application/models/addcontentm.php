@@ -31,6 +31,32 @@ class addcontentm extends CI_Model
 		
 	}
 	
+	function get_magentoid($sku)
+	{
+	$this->db->select('*');
+	$this->db->where('product_sku',$sku);
+	$this->db->from('finalproductlist');
+	$data = $this->db->get();
+	if($data->num_rows() > 0 )
+	return $data->row()->magento_category_id;
+	else
+	return false;
+	}
+	
+	function get_metainformationcat($catid)
+	{
+	$this->db->select("*");
+	$this->db->where('id',$catid);
+	$this->db->from('categories');
+	$result = $this->db->get();
+	if($result->num_rows() > 0 )
+	return $result->row();
+	else
+	return FALSE;
+	}
+	
+	
+	
 	function getallqafailed()
 	{
 	$this->db->select('*');
@@ -499,6 +525,20 @@ class addcontentm extends CI_Model
 		imagejpeg($dst_image,$imagelocation,$jpeg_quality);
 	}
 	
+	function reviewcontentsm()
+	{
+	$this->db->select('*');
+	$this->db->where('status =5 OR status =13');
+	$this->db->from('masterproducttable');
+	$data = $this->db->get();
+	if($data->num_rows() > 0 )
+	return $data->result();
+	else
+	return false;
+	}
+	
+	
+	
 	function reviewcontentm()
 	{
 	$this->db->select('*');
@@ -509,6 +549,30 @@ class addcontentm extends CI_Model
 	return $data->result();
 	else
 	return false;
+	}
+	
+	function countreject($mptid)
+	{
+	$this->db->select('*');
+	$this->db->from('qafailedcontent');
+	$this->db->where('mpt_id',$mptid);
+	$data = $this->db->get();
+	if($data->num_rows() > 0)
+	return TRUE;
+	else
+	return FALSE;
+	}
+	
+	function rejectreason($mptid)
+	{
+	$this->db->select('*');
+	$this->db->from('qafailedcontent');
+	$this->db->where('mpt_id',$mptid);
+	$data = $this->db->get();
+	if($data->num_rows() > 0)
+	return $data->row()->comment;
+	else
+	return FALSE;
 	}
 	
 	function getothersproduct($mpt_id)
@@ -874,7 +938,23 @@ class addcontentm extends CI_Model
 		$keyworddescription = $_POST['keyworddescription'];
 		else
 		$keyworddescription = "";
-		//
+		// english ends
+		// spanish keywords start
+		if(isset($_POST['spanishkeywords']))
+		$spanishkeywords = $_POST['spanishkeywords'];
+		else
+		$spanishkeywords = "";
+		if(isset($_POST['spanishkeyworddescription']))
+		$spanishkeyworddescription = $_POST['spanishkeyworddescription'];
+		else
+		$spanishkeyworddescription = "";
+		// spanish keywords ends
+		// inventory start
+		if(isset($_POST['pInventory']))
+		$pInventory = $_POST['pInventory'];
+		else
+		$pInventory = "";
+		// inventory ends
 		// Date Format Conversation start
 		if($_POST['pSpecialFromDate'] != "")
 		{
@@ -916,6 +996,7 @@ class addcontentm extends CI_Model
 					'product_upc'=>htmlspecialchars($_POST['pupc']),
 					'product_msrp'=>htmlspecialchars($_POST['pmsrp']),
 					'product_retail'=>htmlspecialchars($_POST['pretail']),
+					'product_inventory_level'=> $pInventory,
 					'product_map'=>htmlspecialchars($_POST['pMAP']),
 					'height'=>htmlspecialchars($_POST['pHeight']),
 					'width'=>htmlspecialchars($_POST['pWidth']),
@@ -924,6 +1005,7 @@ class addcontentm extends CI_Model
 					'user_assign'=>htmlspecialchars($user_id),
 					'product_brand'=>htmlspecialchars($_POST['pBrand']),
 					'product_source'=>htmlspecialchars($_POST['pSource']),
+					'eng_video'=>htmlspecialchars($_POST['pvideo']),
 					'specialprice'=>$specialPrice,
 					'specialfromdate'=>$FromDate,
 					'specialtodate'=>$ToDate,
@@ -933,7 +1015,8 @@ class addcontentm extends CI_Model
 					'isset'=>htmlspecialchars($_POST['pisset']),
 					'attributes'=>htmlspecialchars($att),
 					'onlineonly'=>htmlspecialchars($_POST['ponlineonly']),
-					'inmagento'=> '1'
+					'inmagento'=> '3',
+					'status'=> '1'
 								  );
 		$this->db->where('fpl_id',$this->input->post('fpl_id'));
 		$this->db->where('spenish_id',$this->input->post('sppr_id'));
@@ -953,6 +1036,7 @@ class addcontentm extends CI_Model
 					'product_upc'=>htmlspecialchars($_POST['pupc']),
 					'product_msrp'=>htmlspecialchars($_POST['pmsrp']),
 					'product_retail'=>htmlspecialchars($_POST['pretail']),
+					'product_inventory_level'=> $pInventory,
 					'product_map'=>htmlspecialchars($_POST['pMAP']),
 					'product_brand'=>htmlspecialchars($_POST['pBrand']),
 					'height'=>htmlspecialchars($_POST['pHeight']),
@@ -961,16 +1045,18 @@ class addcontentm extends CI_Model
 					'weight'=>htmlspecialchars($_POST['pWeight']),
 					'user_assign'=>htmlspecialchars($user_id),
 					'product_source'=>htmlspecialchars($_POST['pSource']),
+					'spanish_video'=>htmlspecialchars($_POST['spVideo']),
 					'specialprice'=>$specialPrice,
 					'specialfromdate'=>$FromDate,
 					'specialtodate'=>$ToDate,
 					'shippingprice'=>$_POST['pShipping'],
-					'product_metatags'=>htmlspecialchars($keywords),
-					'product_metadescription'=>htmlspecialchars($keyworddescription),
+					'product_metatags'=>htmlspecialchars($spanishkeywords),
+					'product_metadescription'=>htmlspecialchars($spanishkeyworddescription),
 					'isset'=>htmlspecialchars($_POST['pisset']),
 					'attributes'=>htmlspecialchars($att),
 					'onlineonly'=>htmlspecialchars($_POST['ponlineonly']),
-					'inmagento'=> '1'
+					'inmagento'=> '3',
+					'status'=> '1'
 								  );
 		$this->db->where('eng_id',$this->input->post('fpl_id'));
 		$this->db->where('sppr_id',$this->input->post('sppr_id'));
@@ -1040,6 +1126,126 @@ class addcontentm extends CI_Model
 		}
 	}
 	
+
+
+		function get_attributes($id)
+		{
+		$retrunarray = array();
+		$realname = array();
+		$data = explode(')(',$id);
+		$size = sizeof($data);
+		for($i=0;$i<$size;$i++)
+		{
+		$value = str_replace(')','',$data[$i]);
+		$value1= str_replace('(','',$value);
+		$datas = explode('-',$value1);
+		$sizeb = sizeof($datas);
+		for($j=0;$j<$sizeb;$j++)
+		{
+		if(strchr($datas[$j],"_"))
+		{
+		$value2 = explode('_',$datas[$j]);
+		$realname[] = $this->get_att_save_value($value2[1]);
+		}
+		else
+		{
+		// multiple selection attributs starts
+		if(strchr($datas[$j],","))
+		{
+		$valuedd2 = explode('_',$datas[$j]);
+		$retrunarray[] = $valuedd2;
+		}
+		else
+		{
+			$retrunarray[] = $datas[$j];
+		}
+		}
+		}
+		}
+		$datra = array();
+		$reslsize = sizeof($realname);
+		for($k=0;$k<$reslsize;$k++)
+		$datra[$realname[$k]] = $retrunarray[$k];
+		return $datra;
+		}
+
+
+		function get_att_save_value($id)
+		{
+			$data = mysql_query("select * from `attribute_types` where id=$id");
+			$val = mysql_fetch_object($data);
+			return $val->attributename;
+		}
+		
+		function get_allattributescat($ids)
+		{
+			$data = mysql_query("select * from `attribute_types` where `attributename` = '$ids'");
+			$val = mysql_fetch_object($data);
+			return $val->categoryid;
+		}
+	
+	function get_main_attributes($id)
+	{
+		$this->db->select("*");
+		$this->db->from('attribute_types');
+		$this->db->where('categoryid',$id);
+		$this->db->where('status',1);
+		$data = $this->db->get();
+		if($data->num_rows() > 0 )
+		return $data->result();
+		else
+		return FALSE;
+	}
+	
+	function get_sub_attributes($id)
+	{
+		$this->db->select("*");
+		$this->db->from('attribute_types_sub');
+		$this->db->where('attributeid',$id);
+		$this->db->where('status',1);
+		$data = $this->db->get();
+		if($data->num_rows() > 0 )
+		return $data->result();
+		else
+		return FALSE;
+	}
+
+
+
+	
+	function getcatename($id)
+	{
+        $this->db->select('*');
+        $this->db->from('categories');
+		$this->db->where('magento_category_id',$id);
+		$data = $this->db->get();
+		if($data->num_rows() > 0 )
+		{
+		return $data->row()->id;
+		}
+		else
+		{
+		return FALSE;
+		}
+	}
+
+	function getmasterimages($mptid)
+	{
+        $this->db->select('*');
+        $this->db->from('masterproducttable');
+		$this->db->where('mpt_id',$mptid);
+		$data = $this->db->get();
+		if($data->num_rows() > 0 )
+		{
+		return $data->row()->product_img_path;
+		}
+		else
+		{
+		return FALSE;
+		}
+	}
+
+
 	
 }
 ?>

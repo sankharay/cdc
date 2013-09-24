@@ -10,7 +10,7 @@ class finalproductsm extends CI_Model
 	function get_finalproducts($user_id){
 		
 		$this->db->select("*");
-		$this->db->where('status','1');
+		$this->db->where('( status = 1 OR status = 15 )');
 		$this->db->where('inmagento','1');
 		$this->db->where('user_assign',$user_id);
 		$this->db->from('finalproductlist');
@@ -55,6 +55,23 @@ class finalproductsm extends CI_Model
 		$this->db->select("*");
 		$this->db->where("(inmagento = 0 OR inmagento = 1 OR inmagento = 2)  AND status=9 ");
 		$this->db->where('user_assign',$user_id);
+		$this->db->from('finalproductlist');
+		$q = $this->db->get();
+		if($q->num_rows() > 0) {
+            foreach ($q->result() as $row) {
+                $data[] = $row;
+            }
+        	return $data;
+        }
+		
+	}
+	
+    	
+	function get_staging_products($user_id){
+		
+		$this->db->select("*");
+		$this->db->where('status','17');
+		$this->db->where('inmagento','1');
 		$this->db->from('finalproductlist');
 		$q = $this->db->get();
 		if($q->num_rows() > 0) {

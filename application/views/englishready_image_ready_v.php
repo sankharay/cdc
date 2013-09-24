@@ -64,7 +64,7 @@
 									</a>
 								</td>
 								<td class="center">
-                                <a href="<?php echo BASE_URL; ?>/imagesection/index/<?php echo $value->fpl_id; ?>/<?php echo trim($value->product_sku); ?>/<?php echo trim($value->product_source); ?>">
+                                <a href="<?php echo BASE_URL; ?>/imagesection/index/<?php echo $value->fpl_id; ?>/<?php echo trim(str_replace('/','~',$value->product_sku)); ?>/<?php echo trim($value->product_source); ?>">
 										<i class="icon32 icon-color icon-image"></i>                                            
 									</a>
 								</td>

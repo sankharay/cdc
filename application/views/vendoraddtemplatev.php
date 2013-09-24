@@ -112,10 +112,11 @@ Vendor File URL
 						  <thead>
 							  <tr>
 								  <th>Vendor Name ( Username )</th>
-								  <th>Vendor template Selected</th>
 								  <th>Vendor File</th>
 								  <th>Status</th>
+								  <th>Action</th>
 								  <th>Process</th>
+								  <th>Vendor template Selected</th>
 							  </tr>
 						  </thead>   
 						  <tbody>
@@ -131,24 +132,16 @@ Vendor File URL
 <?php $vendor = $this->managevendorm->vendoridtoname($value->vendor_id); 
 echo ucfirst($vendor->vendorName)." ( ".$vendor->username." ) ";
 ?></td>
-								<td class="center">
-								<?php 
-								if($value->template_excelstructure == "" AND $value->template_dbstructure == "")
-								{
-								echo "Template Not Processed yet";
-								}
-								else
-								{
-								echo "<strong>Excel Structure : </strong>".$value->template_excelstructure."<br>";
-								echo "<strong>DB Fields : </strong>".$value->template_dbstructure;
-								}
-								 ?></td>
+								
 								<td class="center">
 <a href="<?php echo BASE_URL; ?>/uploadedfiles/vendorfiles/<?php echo $value->filename; ?>" target="_blank"><?php echo $value->filename; ?></a>
                                 </td>
 								<td class="center">
 									<?php echo $this->managevendorm->templatestatus($value->status); ?>
 								</td>
+                                <td>
+                               <input type="button"  value="Delete Template" class="btn btn-small btn-primary" onClick="return deletetemplate('<?php echo BASE_URL; ?>','<?php echo $value->id; ?>')" />
+                                </td>
                                 <td>
                                 <?php
 								if($value->status == 1)
@@ -165,6 +158,18 @@ File already processed
 								}
 								?>
                                 </td>
+                                <td class="center">
+								<?php 
+								if($value->template_excelstructure == "" AND $value->template_dbstructure == "")
+								{
+								echo "Template Not Processed yet";
+								}
+								else
+								{
+								echo "<strong>Excel Structure : </strong>".$value->template_excelstructure."<br>";
+								echo "<strong>DB Fields : </strong>".$value->template_dbstructure;
+								}
+								 ?></td>
 							</tr>
 							
 							  <?php

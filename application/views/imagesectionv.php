@@ -35,9 +35,7 @@
 					<div class="box-header well">
 						<h2><i class="icon-list-alt"></i> Upload Images</h2>
 						<div class="box-icon">
-							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 						</div>
 					</div>
 				  <div class="box-content">
@@ -91,7 +89,7 @@
 					</div>
 				  <div class="box-content">
                     <div class="advancesearchdata">
-                    <a href="<?php echo  BASE_URL; ?>/magentoediting/mproductlisting/<?php echo $this->uri->segment(3); ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Edit Product</button></a>&nbsp;&nbsp;<a  onclick="return getvendorscontent('<?php echo BASE_URL; ?>',<?php echo $this->uri->segment(3); ?>,'<?php echo $this->uri->segment(4); ?>','<?php echo $this->uri->segment(5); ?>');"><input type="button" class="btn btn-mini btn-primary" value="Get Vendor Images"></a>&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/index.php?fpl_id=<?php echo $this->uri->segment(3); ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Preview</button></a>&nbsp;&nbsp;
+                    <!-- <a href="<?php echo  BASE_URL; ?>/magentoediting/mproductlisting/<?php echo $this->uri->segment(3); ?>/1" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Edit Product</button></a>-->&nbsp;&nbsp;<a  onclick="return getvendorscontent('<?php echo BASE_URL; ?>',<?php echo $this->uri->segment(3); ?>,'<?php echo $this->uri->segment(4); ?>','<?php echo $this->uri->segment(5); ?>');"><input type="button" class="btn btn-mini btn-primary" value="Get Vendor Images"></a>&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/index.php?fpl_id=<?php echo $this->uri->segment(3); ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Preview</button></a>&nbsp;&nbsp;
                     &nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/productpreview/spanish_index.php?fpl_id=<?php echo $this->uri->segment(3); ?>" target="_blank"><button class="btn btn-mini btn-primary" id="finalproductview">Final Spanish Preview</button></a>&nbsp;&nbsp;<button class="btn btn-mini btn-primary" id="asearch">Advance Search</button></div>
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
                         
@@ -220,6 +218,7 @@ echo "Image cropping pending";
 			</div><!--/#content.span10-->
 				</div><!--/fluid-row-->
 <div id="notify"></div>
+<div id="waiting" class="waiting" ><img src="<?php echo BASE_URL; ?>/img/loader.gif" width="32" height="32" /></div>
 		<hr>
 <script type="text/javascript">
 <!--

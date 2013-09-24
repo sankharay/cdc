@@ -54,12 +54,25 @@
                         
                         
 							<label>Product Short Description&nbsp;&nbsp;<input type="button" value="Translate"  class="btn btn-mini btn-primary"  onclick="return translateitem('<?php echo BASE_URL; ?>','pFeature')"></label>
-							<textarea rows="12" name="pFeature" id="pFeature"  style="width:490px;" class="cleditor"><?php echo htmlspecialchars_decode($english_content->short_description); ?></textarea>                   
+							<textarea rows="12" name="pFeature" id="pFeature"  style="width:490px;" class="cleditor">
+<?php 
+if($english_content->short_description == "")
+{
+	echo substr($english_content->product_description,0,200);
+}
+else
+{
+	echo htmlspecialchars_decode($spanish_content->short_description);
+}
+ 
+
+?>
+</textarea>                   
 
                        	
 			<label>Description <input type="button" value="Translate"  class="btn btn-mini btn-primary"  onclick="return translateitem('<?php echo BASE_URL; ?>','pDesc')"></label><br />
 
-							<textarea class="cleditor" rows="12" name="pDesc" id="pDesc" required  style="width:490px;">
+							<textarea rows="12" name="pDesc" id="pDesc" style="width:490px;" class="cleditor">
                             	<?php echo htmlspecialchars_decode($english_content->product_description); ?>
                             </textarea>
                             
@@ -75,7 +88,7 @@
                         
                             
                             
-							<label>Product Specification&nbsp;&nbsp;<button value="Translate"  class="btn btn-mini btn-primary"  onclick="return translateitem('<?php echo BASE_URL; ?>','pSpecs')">Translate</button></label>
+							<label>Product Specification&nbsp;&nbsp;<input type="button" value="Translate"  class="btn btn-mini btn-primary"  onclick="return translateitem('<?php echo BASE_URL; ?>','pSpecs')" value="Translate"></label>
 							<textarea rows="12" name="pSpecs" id="pSpecs"  style="width:490px;" class="cleditor">
                             <?php echo htmlspecialchars_decode($english_content->product_specs); ?>
                             </textarea>
@@ -84,7 +97,7 @@
 						</fieldset><br />
 <fieldset>
 <label>English Disclaimer</label>
-<select name="pDisclaimer" id="disclaimer" required onchange="return disclaimerchange(this.value);">
+<select name="pDisclaimer" id="disclaimer" onchange="return disclaimerchange(this.value);">
 <option value="">Please select disclaimer</option>
 <?php foreach($disclaimer as $valuesdis)
 {
@@ -97,7 +110,7 @@
 </fieldset>
 <fieldset>
 <label>Video Link&nbsp;&nbsp;</label>
-<textarea rows="12" name="pvideo" id="pVideo"  style="width:90%; height:80px;"></textarea>
+<textarea rows="12" name="pvideo" id="pVideo"  style="width:90%; height:80px;"><?php echo $english_content->eng_video; ?></textarea>
 </fieldset>
                         
                         <footer><br />
@@ -189,7 +202,7 @@
 </fieldset>
 <fieldset>
 <label>Video Link&nbsp;&nbsp;</label>
-<textarea rows="12" name="spVideo" id="spVideo"  style="width:90%; height:80px;"></textarea>
+<textarea rows="12" name="spVideo" id="spVideo"  style="width:90%; height:80px;"><?php echo $spanish_content->spanish_video; ?></textarea>
 </fieldset>
                         <footer><br />
                         
@@ -215,9 +228,9 @@
 <ul id="myTab" class="nav nav-tabs">
 <li class="active"><a href="#ginformation">General Information</a></li>
 <li><a href="#categories">Category Management</a></li>
-<li><a href="#attributes">Category Management</a></li>
+<li><a href="#attributes">Attribute Management</a></li>
 <li><a href="#metainformation">Meta Information</a></li>
-<li><a href="#addoncategory">Addon Categories</a></li>
+<li><a href="#addoncategory">Additional Categories</a></li>
 						</ul>
 <div id="myTabContent" class="tab-content">
 <!-- general information starts -->
@@ -241,7 +254,7 @@
                         </fieldset>
                         <fieldset>
                         <label>Special Price</label><br>
-                        <input type="number" placeholder="Enter Special Price" value="" style="width:160px;" class="input-xlarge" id="pSpecialPrice" name="pSpecialPrice">
+                        <input type="text" placeholder="Enter Special Price" value="<?php echo $english_content->specialprice; ?>" style="width:160px;" class="input-xlarge" id="pSpecialPrice" name="pSpecialPrice">
                         <input type="text" placeholder="From Date" class="input-xlarge datepicker" id="pSpecialFromDate" name="pSpecialFromDate" style="width:160px;"> To 
                         <input type="text" placeholder="To Date" class="input-xlarge datepicker" id="pSpecialToDate" name="pSpecialToDate" style="width:160px;">
                         </fieldset>
@@ -256,6 +269,10 @@
 <fieldset>
 <label>Product Shipping</label>
 <input type="text" placeholder="Shipping Price" required="required" value="" class="span6 typeahead" id="pShipping" name="pShipping">
+</fieldset>
+<fieldset>
+<label>Product Inventory</label>
+<input type="text" placeholder="Product Inventory" required="required" value="<?php echo $english_content->product_qty; ?>" class="span6 typeahead" id="pInventory" name="pInventory">
 </fieldset>
 <label>Product Brand</label>
 <?php echo $branddropdown; ?></fieldset>
@@ -298,28 +315,87 @@ foreach($vendors as $vendordata)
 <div id="categories" class="tab-pane">
 <h2>Category Management</h2>
 <?php
-include(PLUGINS_URL."/categorytree/index.php");
+echo $cataid  = $this->addcontentm->getcatename($english_content->product_category);
+include(PLUGINS_URL."/categorytree/index_selected.php");
 ?>
 </div>
 <!-- categories information ends -->
 <!-- categories information starts -->
 <div id="attributes" class="tab-pane">
-<h2>Category Management</h2>
+<!--<h2>Category Management</h2> -->
 <!-- Attributes section starts -->
 <div id="attributes" class="tab-pane">
 <h3>Category Attributes</h3>
 <p>
 <fieldset>
-<label>Height</label>
-<input type="text" name="pHeight" id="pHeight" class="span6 typeahead" value="<?php echo $english_content->height; ?>" required="required" >
-<label>Width</label>
+<label>Height ( in Inch )</label>
+<input type="text" name="pHeight" id="pHeight" class="span6 typeahead" value="<?php echo $english_content->height; ?>" required="required" > 
+<label>Width ( in Inch )</label>
 <input type="text" name="pWidth" id="pWidth" class="span6 typeahead" value="<?php echo $english_content->width; ?>" required="required" >
-<label>Depth</label>
+<label>Depth ( in Inch )</label>
 <input type="text" name="pLength" id="pLength" class="span6 typeahead" value="<?php echo $english_content->length; ?>" required="required" >
-<label>Weight</label>
+<label>Weight ( in Pound )</label>
 <input type="text" name="pWeight" id="pWeight" class="span6 typeahead" value="<?php echo $english_content->weight; ?>" required="required" >
 </fieldset>
-<div id="catattributes"></div>
+<div id="catattributes">
+<?php 
+// check attributes coming as per selection start
+$data = $this->addcontentm->get_attributes($english_content->attributes);
+$key = key($data);
+$catid = $this->addcontentm->get_allattributescat($key);
+$main_attribut = $this->addcontentm->get_main_attributes($catid);
+if(!$main_attribut)
+$main_attribut = $this->addcontentm->get_main_attributes($cataid);
+?>
+<table width="100%" border="0">
+<?php
+if($main_attribut)
+{
+foreach($main_attribut as $values)
+{
+if($values->section_scope == 2)
+{
+$style = "style='height:150px;' multiple";
+$name = "name=subattributes_".$values->id."[]";
+}
+else
+{
+$style = "";
+$name = "name=subattributes_".$values->id;	
+}
+?>
+  <tr >
+    <td valign="top"><strong><?php echo $values->attributename; ?></strong></td>
+    <td><?php 
+	$subatt = $this->addcontentm->get_sub_attributes($values->id);
+	?>
+    <select <?php echo $name; ?> <?php echo $style; ?> >
+    <option value="">Select Attributes</option>
+    <?php 
+	foreach($subatt as $values)
+	{
+		?>
+    <option <?php if (in_array($values->value, $data)) { echo "selected='selected'"; } ?> value="<?php echo  $values->value; ?>"><?php echo  $values->name; ?></option>
+    <?php
+	}
+	?>
+    </select>
+    </td>
+  </tr>
+<?php
+}
+}
+else
+{
+?>
+<tr><td><strong>No Attribute relate to this product</strong></td></tr>
+<?php
+}
+?>
+</table>
+<?php
+// 
+?></div>
 </p>
 </div>
 <!-- Attributes section ends -->
@@ -328,7 +404,60 @@ include(PLUGINS_URL."/categorytree/index.php");
 <div id="metainformation" class="tab-pane">
 <h3>Meta Information</h3>
 <p>
-<div id="metainformations"></div>
+<div id="metainformations">
+
+<?php
+$main_metainfo = $this->addcontentm->get_metainformationcat($cataid);
+?>
+<?php
+if($main_metainfo)
+{
+	?>
+<table width="100%" border="0">
+  <tr>
+    <td><label>Product Keywords</label>
+							<textarea rows="12" name="keywords" class="span12 typeahead" id="pSpecs" required="required"><?php echo $main_metainfo->metakeywords; ?></textarea>
+						</fieldset></td>
+    <td><label>Spanish Product Keywords</label>
+							<textarea rows="12" name="spanishkeywords" class="span12 typeahead" id="pSpecs" required="required"><?php echo $main_metainfo->spanish_metakeywords; ?></textarea>
+						</fieldset></td>
+  </tr>
+  <tr>
+    <td><label>Product Descriptions</label>
+							<textarea rows="12" name="keyworddescription" class="span12 typeahead" id="pSpecs" required="required"><?php echo $main_metainfo->metadescrption; ?></textarea>
+						</fieldset></td>
+    <td><label>Spanish Product Descriptions</label>
+							<textarea rows="12" name="spanishkeyworddescription" class="span12 typeahead" id="pSpecs" required="required"><?php echo $main_metainfo->metadescrption; ?></textarea>
+						</fieldset></td>
+  </tr>
+</table>
+                        <?php
+}
+else
+{
+?>
+<table width="100%" border="0">
+  <tr>
+    <td width=""><label>Product Keywords</label>
+							<textarea rows="12" name="keywords" class="span8 typeahead" id="pSpecs" required="required"></textarea>
+						</fieldset></td>
+    <td><label>Spanish Product Keywords</label>
+							<textarea rows="12" name="spanishkeywords" class="span8 typeahead" id="pSpecs" required="required"></textarea>
+						</fieldset></td>
+  </tr>
+  <tr>
+    <td><label>Product Descriptions</label>
+							<textarea rows="12" name="keyworddescription" class="span8 typeahead" id="pSpecs" required="required"></textarea>
+						</fieldset></td>
+    <td><label>Spanish Product Descriptions</label>
+							<textarea rows="12" name="spanishkeyworddescription" class="span8 typeahead" id="pSpecs" required="required"></textarea>
+						</fieldset></td>
+  </tr>
+</table>
+<?php	
+}
+?>
+</div>
 </p>
 <!-- product meta information ends -->
 </div>
@@ -336,10 +465,12 @@ include(PLUGINS_URL."/categorytree/index.php");
 <div id="addoncategory" class="tab-pane">
 <h3>Addon Categories</h3>
 <p>
+<div style="height:500px; overflow:scroll;">
 <?php
 $abc = new RightMenu();
 echo $abc->getaddonMenu();
 ?>
+</div>
 </p>
 <!-- category addon section ends -->
 </div>

@@ -45,6 +45,10 @@
                             </td>
                           </tr>
                           <tr>
+                            <td>Enter  Attribute Field Numbers </td>
+                            <td><input type="text" name="attributes" id="attributes" value="" />&nbsp;&nbsp;<a data-content="ADD fields suprated by Comma's" data-rel="popover" class="label label-success" href="#" >?</a></td>
+                          </tr>
+                          <tr>
                             <td>File Name</td>
                             <td><?php echo $filename->filename; ?></td>
                           </tr>
@@ -84,15 +88,15 @@
 			function processdata()
 			{
             var vendorid=$('#vendorid').val();
-			alert(vendorid);
             var fileid=<?php echo $this->uri->segment(3); ?>;
+            var attributes = $('#attributes').val();
 			if(vendorid != "0")
 			{
 			$("#waiting").removeClass("waiting");
 			$("#waiting").addClass("waitings");
             $.ajax({
                 type: 'GET',
-                url: '<?php echo BASE_URL."/processfilebyuser/useraccessingapi/"; ?>?vendorid='+vendorid+'&fileid='+fileid,
+                url: '<?php echo BASE_URL."/processfilebyuser/useraccessingapi/"; ?>?vendorid='+vendorid+'&fileid='+fileid+'&attributes='+attributes,
                 success: function(data) {
                 $('#resutingdata').html(data);
 			

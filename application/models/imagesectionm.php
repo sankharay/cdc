@@ -100,11 +100,13 @@ class imagesectionm extends CI_Model
 	
     function getimage_mastertable($fpl_id,$product_sku,$vendor_id)
     {
+		$product_sku = str_replace('%20',' ',$product_sku);
         $this->db->select("product_img_path");
         $this->db->from("masterproducttable");
-		$this->db->where("product_source",$vendor_id);
+		// $this->db->where("product_source",$vendor_id);
 		$this->db->where("product_sku",$product_sku);
 		$data = $this->db->get();
+		// echo $this->db->last_query();
 		if($data->num_rows() > 0 )
 		{
 		$images = $data->row();
@@ -116,7 +118,7 @@ class imagesectionm extends CI_Model
 		else
 		{
 		$data = explode(",",$dataimages);
-		// print_r($data);
+
 		foreach($data as $imgvalue)
 		{
 		$pos = strrchr("http://",strtolower($imgvalue));
@@ -130,6 +132,7 @@ class imagesectionm extends CI_Model
 						);
 		$this->db->insert("product_images",$datainsert);
 		// image resize start
+
 		$resized_path = PLUGINS_URL.'/cropping/autoresizeimages/';
 		$imagesource =  PLUGINS_URL.'/cropping/images/'.$imagename;
 		$config = array(
@@ -146,10 +149,10 @@ class imagesectionm extends CI_Model
 		}
 		else
 		{
-		// echo $imgvalue;
+		return FALSE;
 		}
 		}
-		return $dataimages;
+		return TRUE;
 		}
 		}
 		else
@@ -211,7 +214,7 @@ class imagesectionm extends CI_Model
 	function copyimgto_local($url,$vendor_id)
 	{
 	$contents=file_get_contents($url);
-	$filename = $vendor_id."_".date("D-M-YY-h-m-s").".jpg";
+	$filename = $vendor_id."_".rand(1,20000)."_".date("D-M-YY-h-m-s").".jpg";
 	$save_path=PLUGINS_URL."/cropping/images/".$filename;
 	file_put_contents($save_path,$contents);
 	return $filename;
@@ -260,9 +263,15 @@ class imagesectionm extends CI_Model
 	$this->db->where('finalproductlist_fpl_id',$fpl_id);
 	$result = $this->db->get();
 	if($result->num_rows() > 0 )
-	return TRUE;
+	{
+	$msg = "1";
+	return $msg;
+	}
 	else
-	return FALSE;
+	{
+	$msg = "0";
+	return $msg;
+	}
 	}
 	
 	

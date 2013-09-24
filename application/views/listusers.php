@@ -28,6 +28,9 @@
 					</div>
 					<div class="box-content">
                     
+                    <div class="advancesearchdata"><button id="asearch" class="btn btn-mini btn-primary">Advance Search</button>
+&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/adduser"><button class="btn btn-mini btn-primary">Add New User</button></a>
+                    </div>
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>

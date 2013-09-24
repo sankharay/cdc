@@ -14,7 +14,7 @@
 </td>
 						    </tr>
 							  <tr>
-							    <td>Image Irder</td>
+							    <td>Image Order</td>
 <td>
 <input type="text" value="<?php echo $content->image_position; ?>"  name="imgposition" required placeholder="Please enter only numeric data" pattern="[-+]?[0-9]?[0-9]+" />
 </td>

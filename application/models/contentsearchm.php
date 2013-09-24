@@ -27,6 +27,30 @@ class contentsearchm extends CI_Model
 		
 	}
 	
+	function inprocessing_products(){
+		
+		$user_id = $this->session->userdata('user_id');
+		$this->db->select('*');
+		$this->db->from('masterproducttable');
+		$this->db->where('status', 4);
+		$this->db->where('user_assign =', $user_id);
+		$this->db->group_by('product_sku');
+		$this->db->order_by("priority", "desc"); 
+		$q = $this->db->get();
+		if($q->num_rows() > 0) {
+            foreach ($q->result() as $row) {
+                $data[] = $row;
+            }
+			return $data;
+		}
+			else
+			{
+			return FALSE;
+        	
+        }
+		
+	}
+	
 	function all_users()
 	{
 		$this->db->select("*");
@@ -140,7 +164,6 @@ class contentsearchm extends CI_Model
     	
 	function englshreadycontentshow($accesslevel,$user_id)
 	{
-	if($accesslevel != 3)
 	$this->db->where('user_assign',$user_id);
 	$this->db->select("*");
 	$this->db->where('status','1');
@@ -303,6 +326,32 @@ class contentsearchm extends CI_Model
 		$this->db->select('*');
 		$this->db->from('masterproducttable');
 		$this->db->where('status', 2);
+		$this->db->where('( inmagento = 1 OR inmagento = 4 )');
+		$this->db->where('user_assign =', $user_id);
+		$this->db->group_by('product_sku');
+		$this->db->order_by("priority", "desc"); 
+		$q = $this->db->get();
+		if($q->num_rows() > 0) {
+            foreach ($q->result() as $row) {
+                $data[] = $row;
+            }
+			return $data;
+		}
+			else
+			{
+			return FALSE;
+        	
+        }
+		
+	}
+	
+	function pending_urgent_products(){
+		
+		$user_id = $this->session->userdata('user_id');
+		$this->db->select('*');
+		$this->db->from('masterproducttable');
+		$this->db->where('status', 2);
+		$this->db->where('inmagento', NULL);
 		$this->db->where('user_assign =', $user_id);
 		$this->db->group_by('product_sku');
 		$this->db->order_by("priority", "desc"); 
@@ -390,8 +439,12 @@ class contentsearchm extends CI_Model
 
 	function check_duplicate_upc($upc,$productsource)
 	{
-		$query = mysql_query("select * from masterproducttable where product_upc=$upc AND product_source!=$productsource");
-		if(mysql_num_rows($query) > 0 )
+		$this->db->select('*');
+		$this->db->where('product_upc',$upc);
+		$this->db->where('product_source',$productsource);
+		$this->db->from('masterproducttable');
+		$data = $this->db->get();
+		if($data->num_rows() > 0)
 		return true;
 		else
 		return false;
@@ -527,7 +580,23 @@ class contentsearchm extends CI_Model
 		$keyworddescription = $_POST['keyworddescription'];
 		else
 		$keyworddescription = "";
-		//
+		// english ends
+		// spanish keywords start
+		if(isset($_POST['spanishkeywords']))
+		$spanishkeywords = $_POST['spanishkeywords'];
+		else
+		$spanishkeywords = "";
+		if(isset($_POST['spanishkeyworddescription']))
+		$spanishkeyworddescription = $_POST['spanishkeyworddescription'];
+		else
+		$spanishkeyworddescription = "";
+		// spanish keywords ends
+		// inventory start
+		if(isset($_POST['pInventory']))
+		$pInventory = $_POST['pInventory'];
+		else
+		$pInventory = "";
+		// inventory ends
 		// Date Format Conversation start
 		if($_POST['pSpecialFromDate'] != "")
 		{
@@ -555,7 +624,10 @@ class contentsearchm extends CI_Model
 		$FromDate = "";
 		$ToDate = "";
 		}
-		
+		else
+		{
+		$specialPrice = $_POST['pSpecialPrice'];
+		}
 		// Date format Conversation ends
 		$finaproductdata = array (
 					'product_category'=>htmlspecialchars($collectcat1),
@@ -566,6 +638,7 @@ class contentsearchm extends CI_Model
 					'product_upc'=>htmlspecialchars($_POST['pupc']),
 					'product_msrp'=>htmlspecialchars($_POST['pmsrp']),
 					'product_retail'=>htmlspecialchars($_POST['pretail']),
+					'product_cost'=>htmlspecialchars($_POST['pcost']),
 					'height'=>htmlspecialchars($_POST['pHeight']),
 					'width'=>htmlspecialchars($_POST['pWidth']),
 					'length'=>htmlspecialchars($_POST['pLength']),
@@ -579,6 +652,7 @@ class contentsearchm extends CI_Model
 					'specialfromdate'=>$FromDate,
 					'specialtodate'=>$ToDate,
 					'shippingprice'=>$_POST['pShipping'],
+					'product_inventory_level'=> $pInventory,
 					'product_metatags'=>htmlspecialchars($keywords),
 					'product_metadescription'=>htmlspecialchars($keyworddescription),
 					'product_disclaimer'=>$_POST['pDisclaimer'],
@@ -594,7 +668,7 @@ class contentsearchm extends CI_Model
 		
 		  $spanishproductdata = array (
 					'eng_id'=>$englishinsert_id,
-					'product_category'=>htmlspecialchars($collectcat),
+					'product_category'=>htmlspecialchars($collectcat1),
 					'prduct_name'=>htmlspecialchars($this->translateplaintext($_POST['pName'])),
 					'short_description'=>htmlspecialchars($this->translateplaintext($_POST['finalpsdesc'])),
 					'product_description'=>htmlspecialchars($this->splitstring($_POST['pDesc'])),
@@ -602,6 +676,7 @@ class contentsearchm extends CI_Model
 					'product_upc'=>htmlspecialchars($_POST['pupc']),
 					'product_msrp'=>htmlspecialchars($_POST['pmsrp']),
 					'product_retail'=>htmlspecialchars($_POST['pretail']),
+					'product_cost'=>htmlspecialchars($_POST['pcost']),
 					'product_map'=>htmlspecialchars($_POST['pMAP']),
 					'product_brand'=>htmlspecialchars($_POST['pBrand']),
 					'height'=>htmlspecialchars($_POST['pHeight']),
@@ -614,9 +689,10 @@ class contentsearchm extends CI_Model
 					'specialprice'=>$specialPrice,
 					'specialfromdate'=>$FromDate,
 					'specialtodate'=>$ToDate,
+					'product_inventory_level'=> $pInventory,
 					'shippingprice'=>$_POST['pShipping'],
-					'product_metatags'=>htmlspecialchars($this->translateplaintext($keywords)),
-					'product_metadescription'=>htmlspecialchars($this->translateplaintext($keyworddescription)),
+					'product_metatags'=>htmlspecialchars($spanishkeywords),
+					'product_metadescription'=>htmlspecialchars($spanishkeyworddescription),
 					'product_disclaimer'=>$_POST['pDisclaimer'],
 					'isset'=>htmlspecialchars($_POST['pisset']),
 					'attributes'=>htmlspecialchars($att),

@@ -37,7 +37,10 @@ class log extends CI_Model
 								'11'=>'Duplicate Data',
 								'12'=>'Data Processed In Magento',
 								'13'=>'QA Failed',
-								'14'=>'Data Already Processed'
+								'14'=>'Data Already Processed',
+								'15'=>'Data Edited',
+								'16'=>'Data Trashed',
+								'17'=>'Data on Staging Server'
 								);
 		$status = $status[$statusid];
 		return $status;
@@ -133,7 +136,8 @@ class log extends CI_Model
 			'1' => 'Administrator',
 			'2' => 'Manager',
 			'3' => 'User',
-			'4' => 'Other Company'
+			'4' => 'Other Company',
+			'5' => 'Direct Magento User'
 		 );
 						$ac = explode(',',$data);
 						foreach($ac as $value){
@@ -166,9 +170,30 @@ class log extends CI_Model
 	function whatupdate($statusid)
 	{
 		$status = array(
-								'1'=>'Category Update'
+								'1'=>'Add New Category',
+								'2'=>'Category Update'
 								);
 		$status = $status[$statusid];
+		return $status;
+	}
+	
+	function whatupdatestatus($id)
+	{
+		$status = array(
+								'1'=>'Pending',
+								'2'=>'Already Send'
+								);
+		$status = $status[$id];
+		return $status;
+	}
+	
+	function whatupdatemodule($id)
+	{
+		$status = array(
+								'1'=>'categorynameget',
+								'2'=>'categorynameget'
+								);
+		$status = $status[$id];
 		return $status;
 	}
 	

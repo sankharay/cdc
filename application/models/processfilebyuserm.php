@@ -121,9 +121,11 @@ class processfilebyuserm extends CI_Model
 		exit;
 	}
 	
-	function senddatatodb($file,$vendortemplatedetails,$vendorid)
+	function senddatatodb($file,$vendortemplatedetails,$vendorid,$attributes)
 	{
 		$columns = array();
+		$attributesa = explode(',',$attributes);
+		$attributesasize = sizeof($attributesa);
 		$vendortemplateexcels = $vendortemplatedetails->template_excelstructure;
 		$vendortemplatedb = $vendortemplatedetails->template_dbstructure;
 		$vendortemplatedbrray = array_filter(explode(",",$vendortemplatedb));
@@ -136,7 +138,7 @@ class processfilebyuserm extends CI_Model
 	   $x=2;
 	   $numrows = $excel->sheets[0]['numRows'];
 	   $numcolums = $excel->sheets[0]['numCols'];
-	   for($i=0;$i<$numcolums;$i++){
+	   for($i=0;$i<=$numcolums;$i++){
 		if(isset($excel->sheets[0]['cells'][1][$i]))
 	   $data = $excel->sheets[0]['cells'][1][$i];
 	   else
@@ -187,9 +189,17 @@ class processfilebyuserm extends CI_Model
 					}elseif($newarray[$j] == "product_sku")
 					{
 						$data = str_replace(' ', '', $data);
+						$currentsku = $data;
 					}
     	   			$dbdataarray[$newarray[$j]] = htmlspecialchars($data);
 				}
+			$dbdataarray['attributes']="";
+			for($a=0;$a < $attributesasize;$a++)
+			{
+			$duta = str_replace(" ","",$excel->sheets[0]['cells'][$i][$attributesa[$a]]);
+			$subattributevalue = $this->getsubattribute_name_to_id($excel->sheets[0]['cells'][$i][$attributesa[$a]]);
+			$dbdataarray['attributes'].= "(".$excel->sheets[0]['cells'][1][$attributesa[$a]]."-".$subattributevalue.")";
+			}
 			$dbdataarray['product_source'] = "$vendorid";
 			// echo "<br><pre>";
 			// print_r($dbdataarray);
@@ -203,6 +213,38 @@ class processfilebyuserm extends CI_Model
 			
 			// makeing query for data entering in database - first array ends
 		
+	}
+	
+	function getattribute_name_to_id($value)
+	{
+	$this->db->select('*');
+	$this->db->where('attributename',"$value");
+	$this->db->from('attribute_types');
+	$data = $this->db->get();
+	if($data->num_rows() > 0)
+	{
+		return $data->row()->id;
+	}
+	else
+	{
+	return FALSE;	
+	}
+	}
+	
+	function getsubattribute_name_to_id($value)
+	{
+	$this->db->select('*');
+	$this->db->where('name',"$value");
+	$this->db->from('attribute_types_sub');
+	$data = $this->db->get();
+	if($data->num_rows() > 0)
+	{
+		return $data->row()->value;
+	}
+	else
+	{
+	return FALSE;	
+	}
 	}
 	
 	

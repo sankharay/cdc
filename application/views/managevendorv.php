@@ -34,14 +34,16 @@
 				?>
 				<div class="box">
 					<div class="box-header well">
-						<h2><i class="icon-list-alt"></i> Search Vendors</h2>
+						<h2><i class="icon-list-alt"></i> Manage Vendors</h2>
 						<div class="box-icon">
 							
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
-                    
+                    <div class="advancesearchdata"><button id="asearch" class="btn btn-mini btn-primary">Advance Search</button>
+&nbsp;&nbsp;<a href="<?php echo BASE_URL; ?>/managevendor/addvendor"><button class="btn btn-mini btn-primary">Add New Vendor</button></a>
+                    </div>
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>

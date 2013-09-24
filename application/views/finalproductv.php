@@ -37,7 +37,7 @@
 <li><a href="#categories">Category Management</a></li>
 <li><a href="#attributes">Category Attributes</a></li>
 <li><a href="#metainformation">Metatags</a></li>
-<li><a href="#addoncategory">Addon Category</a></li>
+<li><a href="#addoncategory">Additional Category</a></li>
 						</ul>
 <div id="myTabContent" class="tab-content">
 <!-- general information starts -->
@@ -81,7 +81,7 @@
 </fieldset>
 <fieldset>
 <label>Special Price</label><br />
-<input type="number" name="pSpecialPrice" id="pSpecialPrice" class="input-xlarge" style="width:160px;" value="" placeholder="Enter Special Price" >
+<input type="text" name="pSpecialPrice" id="pSpecialPrice" class="input-xlarge" style="width:160px;" value="" placeholder="Enter Special Price" >
 <input type="text" style="width:160px;" name="pSpecialFromDate" id="pSpecialFromDate" class="input-xlarge datepicker" value="" placeholder="From Date" > To 
 <input type="text" style="width:160px;" name="pSpecialToDate" id="pSpecialToDate" class="input-xlarge datepicker" value="" placeholder="To Date"  >
 </fieldset>
@@ -98,6 +98,10 @@
 <input type="text" name="pShipping" id="pShipping" class="span6 typeahead" value="" required="required" placeholder="Shipping Price" >
 </fieldset>
 <fieldset>
+<fieldset>
+<label>Product Inventory</label>
+<input type="text" placeholder="Shipping Price" required="required" value="" class="span6 typeahead" id="pInventory" name="pInventory">
+</fieldset>
 <label>Product Brand</label>
 <?php echo $branddropdown; ?> <?php if($_POST['brand'] != "" ) { echo "Current Selection : ".$_POST['brand']; } ?></fieldset>
 <fieldset>
@@ -180,11 +184,14 @@ include(PLUGINS_URL."/categorytree/index.php");
 <!-- category addon section starts -->
 <div id="addoncategory" class="tab-pane">
 <h3>Addon Categories</h3>
-<p>
+<p>    
+    
+<div style="height:500px; overflow:scroll;">
 <?php
 $abc = new RightMenu();
 echo $abc->getaddonMenu();
 ?>
+</div>
 
 </p>
 </div>

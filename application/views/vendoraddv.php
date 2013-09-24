@@ -20,15 +20,14 @@
 
 			<div class="row-fluid sortable">
 				<?php
-				if($this->session->userdata('dup'))
+				if($this->session->userdata('update'))
 				{
 					?>
                     <div class="alert alert-error">
 							<button data-dismiss="alert" class="close" type="button">×</button>
 							
-                            <strong><?php echo $this->session->userdata('dup'); 
-							$this->session->unset_userdata('dup');
-							?> </strong>
+                            <strong><?php echo $this->session->userdata('update'); 	
+							$this->session->unset_userdata('update');	?> </strong>
 						</div>
                     <?php
 				}
@@ -49,40 +48,37 @@
 						  <tbody>
 							  <tr>
 								  <td>Vendor Name</th>
-								  <td><input type="text" name="vname" value="" required="required" placeholder="Add Vendor Name"  /></th>
-							  </tr> 
-								  <td>Vendor ID</th>
-								  <td><input type="text" name="vid" value="" required="required" placeholder="Add Vendor ID"  /></th>
-							  </tr> 
+								  <td><input type="text" name="vname" required="required" placeholder="Add Vendor Name" value="<?php if($this->input->post('vname') != "") { echo $this->input->post('vname'); } ?>"  /></th>
+							  </tr>
 							  <tr>
 								  <td>Vendor Host IP Address</td>
 								  <td>
-                                    <input type="text" name="vhostip" value="" required="required" placeholder="Add Vendor Host Ip Address"  />
+                                    <input type="text" name="vhostip" required="required" placeholder="Add Vendor Host Ip Address" value="<?php if($this->input->post('vhostip') != "") { echo $this->input->post('vhostip'); } ?>" />
                                   </td>
 							  </tr>
 							  <tr>
 								  <td>Vendor FTP Username</td>
-								  <td><input type="text" name="vusername" value="" required="required" placeholder="Add Vendor FTP username"  /></td>
+								  <td><input type="text" name="vusername" required="required" placeholder="Add Vendor FTP username" value="<?php if($this->input->post('vusername') != "") { echo $this->input->post('vusername'); } ?>"  /></td>
 							  </tr>
 							  <tr>
 								  <td>Vendor  FTP Password</td>
-								  <td><input type="text" name="vpassword" value="" required="required" placeholder="Add Vendor FTP Password"  /></td>
+								  <td><input type="text" name="vpassword" required="required" placeholder="Add Vendor FTP Password" value="<?php if($this->input->post('vpassword') != "") { echo $this->input->post('vpassword'); } ?>"  /></td>
 							  </tr>
 							  <tr>
 								  <td>Vendor Email</td>
-								  <td><input type="email" name="vemail" value="" required="required" placeholder="Add Vendor Email Address"  /></td>
+								  <td><input type="email" name="vemail" required="required" placeholder="Add Vendor Email Address" value="<?php if($this->input->post('vemail') != "") { echo $this->input->post('vemail'); } ?>"  /></td>
 							  </tr>
 							  <tr>
 								  <td>Vendor Details</td>
-								  <td><input type="text" name="vdetails" value="" placeholder="Add Vendor details"  /></td>
+								  <td><input type="text" name="vdetails" placeholder="Add Vendor details" value="<?php if($this->input->post('vdetails') != "") { echo $this->input->post('vdetails'); } ?>"    /></td>
 							  </tr>
 							  <tr>
 								  <td>Vendor Status</td>
 								  <td>
                                 <select name="vstatus" required>
                                 <option value="">Please Select Vendor Status</option>
-                                <option value="1">Active</option>
-                                <option value="2">Not Active</option>
+                                <option value="1"  <?php if($this->input->post('vdetails') == 1) { echo "selected='selected'"; } ?>  >Active</option>
+                                <option value="2" <?php if($this->input->post('vdetails') == 2) { echo "selected='selected'"; } ?> >Not Active</option>
                                 </select>
                                   </td>
 							  </tr>

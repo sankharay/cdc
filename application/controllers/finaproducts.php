@@ -41,6 +41,15 @@ class finaproducts extends CI_Controller {
 		$this->load->view('productnotificationv',$data);
 		$this->load->view('footer');
 	}
+	
+	function getstagingproduct()
+	{
+		$user_id = $this->session->userdata("user_id");
+		$data['content']= $this->finalproductsm->get_staging_products($user_id);
+		$this->load->view('header');
+		$this->load->view('getstagingproductv',$data);
+		$this->load->view('footer');
+	}
 	 
 	
 }

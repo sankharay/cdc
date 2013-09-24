@@ -185,5 +185,51 @@ function addvendor($vname,$vusername,$vemail,$vdetails,$vhostip,$vstatus,$vid,$v
 	return $result->row();
 	}
 	
+	function getvendorlastid()
+	{
+		$query = $this->db->query('SELECT max(vmID) as id FROM vendormanagement');
+		$id = $query->row();
+		return (($id->id)+1).rand(0,1000);
+	}
+	
+	function checkvendorname($vname)
+	{
+	$this->db->select("*");
+	$this->db->where("vendorName",$vname);
+	$this->db->where("status",1);
+	$this->db->from("vendormanagement");
+	$result  = $this->db->get();
+	if($result->row())
+	return TRUE;
+	else
+	return FALSE;
+	}
+	
+	function deletetemplate($id)
+	{
+	$this->db->where('id',$id);
+	$this->db->delete('vendortemplate');
+	if($this->db->affected_rows() > 0)
+	return TRUE;
+	else
+	return FALSE;	
+	}
+	
+	function sendfileprocessingtable($filename)
+	{
+	$source_file_path = UPLOADEDFILES_URL.'/vendorfiles/'.$filename;
+	$target_file_path = UPLOADEDFILES_URL.'/useruploadfiles/'.$filename;
+	$contents=copy($source_file_path, $target_file_path);
+	$data = array (
+		'userid' => $this->session->userdata('user_id'),
+		'filename' => $filename,
+		'filefor' => 1,
+		'status' => 1
+					);
+	$this->db->insert('files_foraddproduct',$data);
+	return $this->db->insert_id();
+	}
+	
+	
 }
 ?>

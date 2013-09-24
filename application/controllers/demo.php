@@ -25,7 +25,6 @@ class demo extends CI_Controller {
 	 
 	function catgories()
 	{
-	echo "categories";
 	include(PLUGINS_URL."/categorytree/index.php");
 	}
 	

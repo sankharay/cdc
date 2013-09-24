@@ -86,7 +86,8 @@ class attributemanagementm extends CI_Model
 	{
 		$this->db->select("*");
 		$this->db->from('categories');
-		$this->db->order_by('name',DESC);
+		$this->db->order_by('name','ASC');
+		$this->db->group_by('magento_category_id');
 		$data = $this->db->get();
 		if($data->num_rows() > 0 )
 		{
@@ -193,6 +194,18 @@ class attributemanagementm extends CI_Model
 	return FALSE;
 	}
 	
+	function get_metainformationcat($catid)
+	{
+	$this->db->select("*");
+	$this->db->where('id',$catid);
+	$this->db->from('categories');
+	$result = $this->db->get();
+	if($result->num_rows() > 0 )
+	return $result->row();
+	else
+	return FALSE;
+	}
+	
 	function updatecat($id,$catid)
 	{
 	$data = array (
@@ -205,7 +218,6 @@ class attributemanagementm extends CI_Model
 	else
 	return FALSE;
 	}
-	
 	
 }
 ?>
