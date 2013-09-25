@@ -72,7 +72,7 @@
 									</a>
 								</td>
 								<td class="center">
-                               <a class="btn btn-success" href="<?php echo BASE_URL; ?>/contentsearch/reviewspanish/<?php echo $value->product_sku; ?>">
+                               <a class="btn btn-success" href="<?php echo BASE_URL; ?>/contentsearch/reviewspanish/?sku=<?php echo $value->product_sku; ?>">
 										<i class="icon icon-white icon-check"></i>                                            
 									</a>
 								</td>

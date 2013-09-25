@@ -53,12 +53,17 @@ class imagesection extends CI_Controller {
 	 
 	function getvendordata()
 	{
-	$fpl_id = $this->uri->segment(3);
-	$product_sku = $this->uri->segment(4);
-	$product_source = $this->uri->segment(5);
+	$fpl_id = $this->input->post('fplid');
+	$product_sku = str_replace('~','/',$this->input->post('product_sku'));
+	$product_source = $this->input->post('product_source');
 	$imagealreadycopied = $this->imagesectionm->checkimg($fpl_id);
 	if(!$imagealreadycopied)
-	$data['image_check'] = $this->imagesectionm->getimage_mastertable($fpl_id,$product_sku,$product_source);
+	$image_check = $this->imagesectionm->getimage_mastertable($fpl_id,$product_sku,$product_source);
+	// echo $this->db->last_query();
+	if($image_check)
+	echo "1";
+	else
+	echo "0";
 	// redirect(BASE_URL."/imagesection/index/".$fpl_id);
 	exit;
 	}
@@ -73,7 +78,7 @@ class imagesection extends CI_Controller {
 		{
 		$config['upload_path'] = PLUGINS_URL.'/cropping/images/';
 		$config['allowed_types'] = 'jpg|png';
-		$config['max_size']	= '10000';
+		$config['max_size']	= '10000000000000000000000000000000000000000';
 		$config['max_width']  = '2024';
 		$config['max_height']  = '2068';
 		
@@ -81,7 +86,7 @@ class imagesection extends CI_Controller {
 
 		if ( ! $this->upload->do_upload())
 		{
-		$this->session->set_userdata('update',"$this->upload->display_errors()");
+		$this->session->set_userdata('update',$this->upload->display_errors());
 		}
 		else
 		{

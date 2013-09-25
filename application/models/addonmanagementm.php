@@ -22,7 +22,6 @@ class addonmanagementm extends CI_Model
 	{
         $this->db->select('*');
         $this->db->from('finalproductlist');
-		$this->db->where('status',1);
 		$this->db->where('fpl_id',$id);
 		$data = $this->db->get();
 		if($data->num_rows() > 0 )
@@ -39,8 +38,24 @@ class addonmanagementm extends CI_Model
 	{
         $this->db->select('*');
         $this->db->from('finalproductlist');
-		$this->db->where('status',1);
+		$this->db->where('status',12);
 		$this->db->where('fpl_id',$id);
+		$data = $this->db->get();
+		if($data->num_rows() > 0 )
+		{
+		return $data->row();
+		}
+		else
+		{
+		return FALSE;
+		}
+	}
+	
+	function productdetailing($id)
+	{
+        $this->db->select('*');
+        $this->db->from('relatedproducts_magento');
+		$this->db->where('magproductid',$id);
 		$data = $this->db->get();
 		if($data->num_rows() > 0 )
 		{

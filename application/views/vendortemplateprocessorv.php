@@ -30,7 +30,7 @@ table
    ?>
   </td>
   <td valign="top">
-  <table width="200" border="0" cellpadding="5" cellspacing="5">
+  <table width="200" border="0" cellpadding="4" cellspacing="5">
   <?php
 		for($i=0 ; $i < $numcolumns ; $i++)
 		{
@@ -62,3 +62,9 @@ table
   </tr>      
 </table>
 </form>
+<script>
+    window.onunload = refreshParent;
+    function refreshParent() {
+        window.opener.location.reload();
+    }
+</script>

@@ -6,10 +6,10 @@
 	$result = check_fpl_id_exist($fpl_id);
 	if($result == TRUE)
 	{
-	require_once(MAGE_FILE_URL.'/app/Mage.php');
+	require_once(MAGE_FILE_URL_DEMO);
 	Varien_Profiler::enable();
 	Mage::setIsDeveloperMode(true);
-
+	$status = $_GET['status'];
 
 	umask(0);
 	Mage::app('default'); 
@@ -22,20 +22,19 @@
 			$productId = $magentoproductIds->getId();
 			if ($productId) {
 				$magentoproductIds->setStoreIds(array(1));
-				$magentoproductIds->setStatus(2);
+				$magentoproductIds->setStatus($status);
 				$magentoproductIds->save();
 			echo "Product Unpublished";
+			$setstatus = insert_data_status($content->product_sku,$status);
 			}
 			}
 			else
 			{
 			echo "Product Not Exist";
-			// $categorys = explode('_',$content->product_category);
 			}
 	}
 	else
 	{
-	// fpl not exist so no result
 	exit;
 	}
 	

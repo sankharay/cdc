@@ -1,5 +1,5 @@
 <footer>
-			<p class="pull-left">&copy; <a href="http://usman.it" target="_blank">iCuracao</a> 2013</p>
+			<p class="pull-left">&copy; <a href="http://icurocao.com/" target="_blank">iCuracao</a> 2013</p>
 			<p class="pull-right">Powered by: <a href="http://icurocao.com/">iCuracao</a></p>
 		</footer>
 		
@@ -77,7 +77,74 @@
 	<!-- application script for Charisma demo -->
 	<script src="<?php echo BASE_URL; ?>/js/custom.js"></script>
 
+<script type="text/javascript" src="https://icuracao.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e/en_US-ylehnt-1988229788/6132/47/1.4.0-m5/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=8005a122"></script>
 
-    
+<!-- validate form -->
+	<script src="<?php echo BASE_URL; ?>/js/jquery.validate.js"></script>
+	<script>
+$().ready(function() {
+	$("#english-form").validate({
+		ignore: "",
+		rules: {
+			pInventory: "required",
+			pSku: "required",
+			pcost: "required",
+			pretail: "required",
+			pmsrp: "required",
+			pMAP: "required",
+			pShipping: "required",
+			pHeight: "required",
+			pWidth: "required",
+			pLength: "required",
+			pWeight: "required"
+		},
+		messages: {
+			pInventory: "Enter Product Inventory",
+			pSku: "Enter Product Sku",
+			pcost: "Enter Product Cost",
+			pretail: "Enter Product Retail",
+			pmsrp: "Enter Product MRSP",
+			pMAP: "Enter Product MAP",
+			pShipping: "Enter Product Shipping",
+			pHeight: "Enter Product Height",
+			pWidth: "Enter Product Width",
+			pLength: "Enter Product Depth",
+			pWeight: "Enter Product Weight"
+		}
+	});
+	});
+</script>
+<style>
+label.error
+{
+	position:fixed !important;
+	z-index:100 !important;
+	float:right !important;
+	color:#FFFFFF !important;
+	top: 20px;
+	background:#F00;
+	padding:5px;
+    left: 10px;
+	visibility: visible !important;
+	display:block !important;
+}
+.myerror
+{
+	background:#F00 !important;
+	color:#FFF !important;
+}
+.asterik
+{
+	color:#F00;
+	font-size:10px;
+	margin-left:10px;
+}
+</style>
+
+
+<!-- end checkboxTree configuration -->
+
+
+
 </body>
 </html>

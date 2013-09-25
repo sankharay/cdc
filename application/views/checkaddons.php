@@ -8,8 +8,6 @@ if($content)
 								  <th>Product Name</th>
 								  <th>Product SKU</th>
 								  <th>Product UPC</th>
-								  <th>Brand</th>
-								  <th>Source</th>
 								  <th>Action</th>
 							  </tr>
 						  </thead>   
@@ -21,19 +19,13 @@ $productids = array_unique(array_slice($productids, 0));
 $numproducts = sizeof($productids);
 for($i=0;$i<$numproducts;$i++)
 {
-$data = $this->addonmanagementm->productdetail($productids[$i]);
+$data = $this->addonmanagementm->productdetailing($productids[$i]);
 ?>
 <tr>
-        <td><?php echo $data->prduct_name; ?></td>
-        <td class="center"><?php echo $data->product_sku; ?></td>
+        <td><?php echo $data->productname; ?></td>
+        <td class="center"><?php echo $data->productsku; ?></td>
         <td class="center">
-        <?php echo $data->product_upc; ?>
-        </td>
-        <td class="center">
-            <?php echo $data->product_brand; ?>
-        </td>
-        <td class="center">
-            <?php echo $this->addonmanagementm->getvendorname($data->product_source); ?>
+        <?php echo $data->productupc; ?>
         </td>
         <td class="center">
 <li class="icon icon-color icon-trash" onClick="return deladon('<?php echo $fplid; ?>','<?php echo $content; ?>','<?php echo $productid[$i]; ?>');"></li>

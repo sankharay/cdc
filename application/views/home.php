@@ -19,15 +19,60 @@
 
 			<div class="row-fluid sortable">
 				
-				<div class="box">
+				<div class="box span6">
 					<div class="box-header well">
-						<h2><i class="icon-list-alt"></i> Welcome TO Curacao CDC</h2>
+						<h2><i class="icon-list-alt"></i> Welcome <?php echo $this->session->userdata('fname'); ?> <?php echo $this->session->userdata('lname'); ?></h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
 						<div id="sincos"  class="center" style="height:300px" ></div>
+						
+					</div>
+				</div>
+                <div class="box span6">
+					<div class="box-header well">
+						<h2><i class="icon-list-alt"></i>  Reporting for Current Week</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<div id="sincos"  class="left" style="height:300px" >
+                        <?php $mondaydate = date('Y-m-d',strtotime('last sunday')); ?>
+                        <?php $saturdaydate = date('Y-m-d',strtotime('next saturday')); 
+						  
+						?>
+                        <table width="80%" border="0" cellpadding="5" cellspacing="5">
+  <tr>
+    <td><h5>Number of SKU's Pending : </h5></td>
+    <td><?php echo $this->reportingm->get_data_pending_ready($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+  <tr>
+    <td><h5>Number of SKU's In Progress : </h5></td>
+    <td><?php echo $this->reportingm->get_data_processing_ready($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+  <tr>
+    <td><h5>Number of SKU's English Ready : </h5></td>
+    <td><?php echo $this->reportingm->get_data_english_ready($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+  <tr>
+    <td><h5>Number of SKU's Spanish Ready : </h5></td>
+    <td><?php echo $this->reportingm->get_data_spanish_ready($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+  <tr>
+    <td><h5>Number of SKU's Reject : </h5></td>
+    <td><?php echo $this->reportingm->countreject($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+  <tr>
+    <td><h5>Number of SKU's Ready : </h5></td>
+    <td><?php echo $this->reportingm->get_data_ready_ready($this->session->userdata('user_id'),$mondaydate,$saturdaydate); ?></td>
+  </tr>
+</table>
+
+                        
+                        </div>
 						
 					</div>
 				</div>

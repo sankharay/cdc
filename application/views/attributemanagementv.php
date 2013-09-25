@@ -51,9 +51,10 @@
 							  ?>
 							  
 							<tr>
-							  <td><?php echo $this->attributemanagementm->get_category_name($value->categoryid); ?>&nbsp;
-  <a href="<?php echo BASE_URL; ?>/attributemanagement/editcategory/<?php echo $value->id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Edit Category</button></a>
-                              </td>
+							  <td><?php echo $this->attributemanagementm->get_category_name($value->categoryid);
+echo "-".$value->categoryid;
+ ?>&nbsp;
+  <a href="<?php echo BASE_URL; ?>/attributemanagement/editcategory/<?php echo $value->id; ?>" class="cboxElement"><button class="btn btn-mini btn-primary">Edit Category</button></a></td>
 								<td><?php echo $value->attributename; ?></td>
 <td class="center">
 <?php 

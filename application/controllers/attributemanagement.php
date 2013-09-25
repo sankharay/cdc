@@ -106,6 +106,8 @@ class attributemanagement extends CI_Controller {
 					'categoryid' => $this->input->post('catid'),
 					'metakeywords' => $this->input->post('metakeywords'),
 					'metadescription' => $this->input->post('metadescription'),
+					'spanish_metakeywords' => $this->input->post('spanishmetakeywords'),
+					'spanish_metadescription' => $this->input->post('spanishmetadescription'),
 					'status' => $this->input->post('status')
 							);
 		$metainsert = $this->attributemanagementm->insert_common_data($data);
@@ -130,6 +132,8 @@ class attributemanagement extends CI_Controller {
 					'categoryid' => $this->input->post('catid'),
 					'metakeywords' => $this->input->post('metakeywords'),
 					'metadescription' => $this->input->post('metadescription'),
+					'spanish_metakeywords' => $this->input->post('spanishmetakeywords'),
+					'spanish_metadescription' => $this->input->post('spanishmetadescription'),
 					'status' => $this->input->post('status')
 							);
 		$metainsert = $this->attributemanagementm->update_common_data($data,$contentid);
@@ -152,7 +156,7 @@ class attributemanagement extends CI_Controller {
 	 function getmetainformation()
 	 {
 	 $categoryid = $this->uri->segment(3);
-		$data['main_metainfo'] = $this->attributemanagementm->get_metainformation($categoryid);
+		$data['main_metainfo'] = $this->attributemanagementm->get_metainformationcat($categoryid);
 		$this->load->view('getmetainformationv',$data);
 	 }
 	 
@@ -167,7 +171,6 @@ class attributemanagement extends CI_Controller {
 		$data['categories'] = $datas = $this->attributemanagementm->list_categories();
 		$this->load->view('editcategoryv',$data);
 	 }
-	 
 	
 }
 

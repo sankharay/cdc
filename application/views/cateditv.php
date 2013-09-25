@@ -29,33 +29,70 @@
 						</div>
 					</div>
 				  <div class="box-content">
-                  <form action="" method="post">
+                  
+                  <form action="" method="post" enctype="multipart/form-data">
                     <table width="100%" class="table table-striped table-bordered ">
 						   
 						  <tbody>
 							  <tr>
 								  <td>Category Name</td>
-								  <td><input type="text" name="catname" required="required" value="<?php echo $content->name; ?>" /></td>
+								  <td colspan="2"><input type="text" name="catname" required="required" value="<?php echo $content->name; ?>" /></td>
+							  </tr>
+							  <tr>
+								  <td>Category Title</td>
+								  <td colspan="2"><input type="text" name="cattitle" id="cattitle" required="required" value="<?php echo $content->cattitle; ?>" /></td>
 							  </tr>
 							  <tr>
     <td>Select Cat. Parent</td>
-    <td><?php echo $this->categorymanagementm->listselectedcatdropdown($content->parent_id); ?></td>
+    <td colspan="2"><?php 
+	echo $this->categorymanagementm->listcatdropdownselected($content->parent_id);
+	?></td>
 						    </tr>
 							  <tr>
-							    <td>Mag. Eng. Category Id</td>
-							    <td><input type="text" name="magengid" required="required" value="<?php echo $content->magento_category_id; ?>" /></td>
+							    <td>Category Description</td>
+							    <td colspan="2">
+<textarea rows="10" cols="70" name="magengDesc"  id="magengDesc" required="required" class="span9"><?php echo $content->categorydes; ?></textarea>
+							</td>
 						    </tr>
 							  <tr>
-							    <td>Mag. Sp. Category Id</td>
-							    <td><input type="text" name="magspaid" required="required" value="<?php echo $content->magento_cat_spenish_id; ?>" /></td>
+							    <td colspan="2">
+<label>Meta Keywords</label>
+  <textarea rows="8" cols="70" name="metaKeywords"  id="metaKeywords" required="required" class="span10"><?php echo $content->metakeywords; ?></textarea>						        </td>
+							    <td>
+<label>Spanish Meta Keywords</label>
+<textarea rows="8" cols="70" name="smetaKeywords"  id="smetaKeywords" required="required" class="span10"><?php echo $content->	spanish_metakeywords; ?></textarea></td>
+					        </tr>
+							  <tr>
+							    <td colspan="2">
+<label>Meta Description</label>
+						        <textarea rows="8" cols="70" name="metaDescription"  id="metaDescription" required="required" class="span10"><?php echo $content->metadescrption; ?></textarea>						        </td>
+							    <td>
+<label>Spanish Meta Description</label>
+                                <textarea rows="8" cols="70" name="smetaDescription"  id="smetaDescription" required="required" class="span10"><?php echo $content->spanish_metadescription; ?></textarea></td>
+					        </tr>
+							  <tr>
+							    <td>Magento Category Image</td>
+							    <td colspan="2">
+<input type="file" name="userfile" size="20" pattern="jpg,gif,png only">
+                                </td>
 						    </tr>
 							  <tr>
 							    <td>Spanish Name</td>
-							    <td><input type="text" name="magspanishname" required="required" value="<?php echo $content->spanish_name; ?>" /></td>
+							    <td colspan="2"><input type="text" name="magspanishname" required="required" value="<?php echo $content->spanish_name; ?>" /></td>
+						    </tr>
+							  <tr>
+							    <td>Status</td>
+							    <td colspan="2">
+<select name="catstatus">
+<option value="">Please Select Status</option>
+<option value="1" <?php if($content->status == 1 ) echo "selected='selected'"; ?>>Active</option>
+<option value="0" <?php if($content->status == 0 ) echo "selected='selected'"; ?>>De-Active</option>
+</select>
+                                </td>
 						    </tr>
 							  <tr>
 							    <td>&nbsp;</td>
-							    <td><input class="btn" type="submit" name="submit" value="Edit Category" /></td>
+							    <td colspan="2"><input class="btn" type="submit" name="submit" value="Add Category" /></td>
 						    </tr>
                               </tbody>
                               </table>

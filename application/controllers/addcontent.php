@@ -125,6 +125,7 @@ class addcontent extends CI_Controller {
 	
 	function reviewcontent()
 	{
+		$data['contents'] = $this->addcontentm->reviewcontentsm();
 		$data['content'] = $this->addcontentm->reviewcontentm();
 		$data['allusers'] = $this->addcontentm->all_users();
 		$this->load->view("header");
@@ -141,7 +142,7 @@ class addcontent extends CI_Controller {
 	
 	function viewproductothersqa()
 	{
-	$mpt_id =$this->uri->segment(3); 
+	$mpt_id = $data['mpt_iid'] = $this->uri->segment(3);
 	$data['content'] = $this->addcontentm->getothersproductqa($mpt_id);
 	$fpl_id = $this->addcontentm->get_fpl_id($mpt_id);
 	$data['images'] = $this->addcontentm->get_images($fpl_id);

@@ -3,7 +3,9 @@
 class Login extends CI_Controller {
 
 	 function __construct(){
-           parent::__construct(); 
+           parent::__construct();
+			// if($this->session->userdata('user_id') AND $this->session->userdata('fname') AND $this->session->userdata('lname'))
+			// redirect(BASE_URL.'/home');
     }
 	 
 	public function index()

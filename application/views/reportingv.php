@@ -21,7 +21,7 @@
 				
 				<div class="box">
 					<div class="box-header well">
-						<h2><i class="icon-list-alt"></i> Add New User</h2>
+						<h2><i class="icon-list-alt"></i> Generate User Reports</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 						</div>
@@ -63,9 +63,54 @@
     <td colspan="2"><div id="notify"></div></td>
     </tr>
 </table>
-
 					</div>
+                    
+                    
 				</div>
+                
+                <div class="row-fluid sortable">
+				
+				<div class="box">
+					<div class="box-header well">
+						<h2><i class="icon-list-alt"></i> Generate Failed Content Reports</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+<form action="<?php echo BASE_URL; ?>/vendorreporting/index/" method="post">
+                        <table width="100%" border="0">
+  <tr>
+    <td>From Date</td>
+    <td><input type="date" name="ffromDate" id="ffromDate" class="datepicker"  required="required" /></td>
+  </tr>
+  <tr>
+    <td>To Date</td>
+    <td><input type="date" name="ftoDate" id="ftoDate" class="datepicker"  required="required" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="sumit" id="sumit" class="btn btn-primary"  required="required" /></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <?php
+	if($this->session->userdata('updated'))
+	{
+	echo $this->session->userdata('updated');
+	$this->session->unset_userdata('updated');	
+	}
+	?>
+    <div id="notifys"></div></td>
+    </tr>
+</table>
+</form>
+					</div>
+                    
+                    
+				</div>
+                
+                
 			</div><!--/row-->
 			
 			<div class="row-fluid sortable"></div><!--/row-->

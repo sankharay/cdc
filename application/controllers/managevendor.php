@@ -147,48 +147,47 @@ class Managevendor extends CI_Controller {
 	$vdetails = $this->input->post('vdetails');
 	$vhostip = $this->input->post('vhostip');
 	$vstatus = $this->input->post('vstatus');
-	$vid = $this->input->post('vid');
+	$vid = $this->managevendorm->getvendorlastid();
 	if($vname == "")
 	{
-		$error = TRUE;
-		$data['error'] = "Vendor name not null"; 
+	$error = TRUE;
+	$this->session->set_userdata('update',"Vendor name not null");
+	}
+	else
+	{
+	$vnames = $this->managevendorm->checkvendorname($vname);
+	if($vnames)
+	{
+	$error = TRUE;
+	$this->session->set_userdata('update',"Vendor name already exist");
+	}
 	}
 	if($vusername == "")
 	{
 		$error = TRUE;
-		$data['error'] = "Vendor username not null"; 
+	$this->session->set_userdata('update',"Vendor username not null");
 	}
 	if($vemail == "")
 	{
 		$error = TRUE;
-		$data['error'] = "Vendor email not null"; 
+	$this->session->set_userdata('update',"Vendor email not null");
 	}
 	if($vpassword == "")
 	{
 		$error = TRUE;
-		$data['error'] = "Vendor password not null"; 
-	}
-	if($vid == "")
-	{
-		$error = TRUE;
-		$data['error'] = "Vendor id not null"; 
+	$this->session->set_userdata('update',"Vendor password not null"); 
 	}
 	if($vhostip == "")
 	{
 		$error = TRUE;
-		$data['error'] = "Vendor Host IP not null"; 
-	}
-	if($vdetails == "")
-	{
-		$error = TRUE;
-		$data['error'] = "Vendor details not null"; 
+	$this->session->set_userdata('update',"Vendor Host IP not null"); 
 	}
 	if($error == FALSE)
 	{
 		$result = $this->managevendorm->addvendor($vname,$vusername,$vemail,$vdetails,$vhostip,$vstatus,$vid,$vpassword);
 		if($result)
 		{
-		$this->session->set_userdata('pnm','Editing DONE');
+		$this->session->set_userdata('update','Vendor List Updated');
 		redirect(BASE_URL."/managevendor/viewvendors/");
 		}
 	}
@@ -215,17 +214,19 @@ class Managevendor extends CI_Controller {
 	$dup_result = $this->managevendorm->vendor_duplicate($vendorid);
 	if($dup_result)
 	{
+	$error = TRUE;
 	$this->session->set_userdata('update',"this vendor template already exist");
 	}
 	if($error)
 	{
+			redirect(BASE_URL.'/managevendor/vdbtemplate/');
 	}
 	else
 	{
 	// Upload Vendor File Starts
 	$config['upload_path'] = UPLOADEDFILES_URL.'/vendorfiles/';
 		$config['allowed_types'] = 'xls';
-		$config['max_size']	= '100';
+		$config['max_size']	= '100000000000000000000';
 		
 		$this->load->library('upload', $config);
 
@@ -237,7 +238,11 @@ class Managevendor extends CI_Controller {
 		{
 			$data = $upload_data = $this->upload->data();
 			$filename = $data['file_name'];
+			// send file to User processing folder also starts
+			$this->managevendorm->sendfileprocessingtable($filename);
+			// send files to user processing folder also ends
 			$result = $this->managevendorm->savevendor($filename,$vendorid);
+			redirect(BASE_URL.'/managevendor/vdbtemplate/');
 	}
 	// Upload Vendor File Ends
 	// copy file to new location starts
@@ -256,6 +261,16 @@ class Managevendor extends CI_Controller {
 	$this->load->view('vendoraddtemplatev',$data);
 	$this->load->view("footer");	
 	}
+	 
+	 function deltemplate()
+	 {
+		$vtid = $this->input->post('id');
+		$result = $this->managevendorm->deletetemplate($vtid); 
+		if($result)
+		echo "0";
+		else
+		echo "1";
+	 }
 	 
 	
 }

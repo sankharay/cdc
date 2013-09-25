@@ -20,12 +20,13 @@ $name = "name=subattributes_".$values->id;
     <td><?php 
 	$subatt = $this->attributemanagementm->get_sub_attributes($values->id);
 	?>
-    <select <?php echo $name; ?> <?php echo $style; ?> required="required" >
+    <select <?php echo $name; ?> <?php echo $style; ?> >
+    <option value="">Select Attributes</option>
     <?php 
 	foreach($subatt as $values)
 	{
 		?>
-    <option value="<?php echo  $values->id; ?>"><?php echo  $values->name; ?></option>
+    <option value="<?php echo  $values->value; ?>"><?php echo  $values->name; ?></option>
     <?php
 	}
 	?>

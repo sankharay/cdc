@@ -24,6 +24,12 @@ class Processfilebyuser extends CI_Controller {
 	 {
 		 $fileid = $this->input->get('fileid');
 		 $vendorid = $this->input->get('vendorid');
+		 $attributes=$this->input->get('attributes');
+		 if(isset($attributes))
+		 $attributes = $this->input->get('attributes');
+		 else
+		 $attributes = "";
+
 		 $userid = $this->session->userdata('user_id');
 		 // update file records start
 		 $updatefilerecord = $this->processfilebyuserm->updatefilerecord($fileid,$userid);
@@ -44,7 +50,7 @@ class Processfilebyuser extends CI_Controller {
 		 if($validateexcel == TRUE)
 		 {
 			 // everything okay file is okay
-			 $result = $this->processfilebyuserm->senddatatodb($vendorfilename->filename,$vendortemplatedetails,$vendorid);
+			 $result = $this->processfilebyuserm->senddatatodb($vendorfilename->filename,$vendortemplatedetails,$vendorid,"$attributes");
 			 echo "Product Inserted Successfully";
 		 }
 		 else

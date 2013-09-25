@@ -21,6 +21,8 @@ class Api extends CI_Controller {
 	 function __construct(){
            parent::__construct();
 		   $this->load->model("apim");
+			ini_set('display_errors',1);
+			error_reporting(E_ALL);
     }
 	 
 	 function index()
@@ -52,6 +54,46 @@ class Api extends CI_Controller {
 		 {
 			 // everything okay file is okay
 			 $result = $this->apim->senddatatodb($vendorfilename,$vendortemplatedetails,$vendorid);
+			 echo "Processing DONE";
+		 }
+		 else
+		 {
+			 // file not okay
+			$message = $vendorid." File is not valid";
+			$this->load->library('email');
+			$this->email->from('sandeepk@icurocao.com', 'Your Name');
+			$this->email->to('sandeepk@icurocao.com');
+			$this->email->cc('sandeep.kharay@gmail.com');
+			$this->email->subject('Not Proper ');
+			$this->email->message($message);
+			$this->email->send();
+			echo $this->email->print_debugger();
+		 }
+		 exit;
+		 $this->load->view("apiv",$data);
+	 }
+	 
+	 function apiaccessupdate()
+	 {
+		 $vendorid = $this->uri->segment(3);
+		 $data['vendorverified'] = $this->apim->verifyvendor($vendorid);
+		 $vendordata = $this->apim->getvendordetails($vendorid);
+		 $vendorfilename = $this->apim->ftpcopyfile($vendordata,$vendorid);
+		 $vendortemplatedetails = $this->apim->getvendorupdatetemplate($vendorid);
+		 if($vendortemplatedetails)
+		 {
+		 $validateexcel = $this->apim->matchexcelfields($vendorfilename,$vendortemplatedetails->template_excelstructure);
+		 }
+		 else
+		 {
+		 echo "<div class='alert alert-error'><button data-dismiss='alert' class='close' type='button'>×</button>
+							<strong>Oh snap!</strong>Please select right Vendor</div>";
+		 exit;
+		 }
+		 if($validateexcel == TRUE)
+		 {
+			 // everything okay file is okay
+			 $result = $this->apim->senddatatoupdatedb($vendorfilename,$vendortemplatedetails,$vendorid);
 			 echo "Processing DONE";
 		 }
 		 else

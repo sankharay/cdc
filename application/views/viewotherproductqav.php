@@ -1,4 +1,4 @@
-<table width="600px" border="0" cellpadding="5" cellspacing="5">
+<table width="1000px" height="1000px" border="0" cellpadding="5" cellspacing="5">
   <tr>
     <td><strong>Product Name</strong></td>
   </tr>
@@ -29,6 +29,19 @@
   <tr>
     <td>
     <?php
+if(!$images)
+{
+$masterimages = $this->addcontentm->getmasterimages($mpt_iid);
+$imagearray = explode(",",$masterimages);
+foreach($imagearray as $imgurl)
+{
+?>
+<img src="<?php echo $imgurl; ?>"  />
+<?php
+}
+}
+else
+{
 	foreach($images as $imagedatarow)
 {
 if($imagedatarow->fileplacement == 2 )
@@ -41,7 +54,12 @@ $imagelocation = IMAGES_LOCATION_CDC_WEB_URL."/images/".$imagedatarow->img_name;
 	<?php						
 							// copy image section ends
 }
+}
 	?>
     </td>
   </tr>
+<tr><td>
+<?php echo htmlspecialchars_decode($content->eng_video); ?>
+<?php echo htmlspecialchars_decode($content->spanish_video); ?>
+</td></tr>
 </table>
