@@ -24,7 +24,7 @@
 			while($content = mysql_fetch_object($contents))
 			{
 			if(($que % 100) == 0)
-			sleep(900);
+			sleep(120);
 
         	$product_id = Mage::getModel('catalog/product')->getIdBySku(trim($content->sku));
 			if($product_id)
