@@ -78,18 +78,19 @@
 			if(in_array('product_category',$tempstructurearray))
 			{
 			 $cat = $product->getCategoryIds();
-			 if(is_array($content['product_category']))
+
+			$newarray = explode('_',$content['product_category']);
+			$arraysize = sizeof($newarray);
+			 if($arraysize > 1)
 			 {
-				$newarray = explode('_',$content['product_category']);
-				$arraysize = sizeof($newarray);
 				for($i=0;$i<$arraysize;$i++)
 				$cat[] = $newarray[$i];
-			 	$cat = array_filter($cat);
+			 	$cat = array_unique(array_filter($cat));
 			 }
 			 else
 			 {
 			 $cat[] = $content['product_category'];
-			 $cat = array_filter($cat);
+			 $cat = array_unique(array_filter($cat));
 			 }
 			 $product->setCategoryIds($cat);
 			}
@@ -181,7 +182,7 @@
 				$product->save();
 				$dataprocessed = updateapimater_table_status($content['product_sku']);
 echo $content['product_sku']." Updated<br>";
-
+sleep(2);
 			 	} catch (Exception $ex) {
 				echo $ex->getMessage();
 			}
