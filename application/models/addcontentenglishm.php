@@ -127,6 +127,24 @@ class addcontentenglishm extends CI_Model
 		 return FALSE;
 	 }
 	}
+	
+	
+	
+    function get_vendor_realid($vendorid)
+    {
+     $this->db->select("*");
+	 $this->db->where('vmID',$vendorid);
+     $this->db->from("vendormanagement");
+	 $query = $this->db->get();
+	 if($query->num_rows())
+	 {
+		return $query->row()->vendorID; 
+	 }
+	 else
+	 {
+		 return FALSE;
+	 }
+	}
 
 	function update_upc_id($upc,$productsource)
 	{

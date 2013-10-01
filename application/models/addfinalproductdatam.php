@@ -385,6 +385,7 @@ class addfinalproductdatam extends CI_Model
 	$this->db->where('product_source',$vendorid);
 	$this->db->from('masterproducttable');
 	$data = $this->db->get();
+	echo $this->db->last_query();
 	if($data->num_rows() > 0 )
 	{
 		return TRUE;

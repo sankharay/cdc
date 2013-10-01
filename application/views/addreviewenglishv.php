@@ -353,7 +353,9 @@ echo $branddropdown;
 ?></fieldset>
 <fieldset>
 <label>Product Vendor Id</label>
-<?php 
+<?php
+if($english_content->product_source != "")
+$vendorrealvdid = $this->addcontentenglishm->get_vendor_realid($english_content->product_source);
 $vendors = $this->addcontentenglishm->listvendordetails();
 ?>
 <select name="pSource" id="pSource" required="required">
@@ -361,7 +363,7 @@ $vendors = $this->addcontentenglishm->listvendordetails();
 <?php
 foreach($vendors as $vendordata)
 {
-if($vendordata->vendorID == 2139)
+if($vendordata->vendorID == $vendorrealvdid)
 {
 $selection = " selected='selected'";
 }
