@@ -52,12 +52,7 @@
 					
 					//if(file_exists(trim($img[$i]))){
 					//echo 'here';
-						if(!@file_get_contents($img[$i])){
-							$noimageentry = mysql_query("UPDATE `direct_mosse_products` SET `spanish_Product_Name`='5' WHERE `SKU`='$content->SKU'");
-
-						}
-						else
-						{
+						if(file_get_contents(trim($img[$i]))){	
 							$from = $img[$i];
 							$urlimg = rand(1,2000);
 							echo $image = IMAGES_MAGENTO_LOCATION_URL.str_replace('/','_',$sku).'_'.$urlimg.'.jpg';
@@ -119,12 +114,12 @@
 			$product->setvendorid($content->source);
 if($content->Size != "")
 {
-$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 $productspecs = htmlspecialchars($productspecs);
 }
 else
 {
-$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 $productspecs = htmlspecialchars($productspecs);
 }
 
@@ -149,13 +144,7 @@ $productspecs = htmlspecialchars($productspecs);
 
 
 			 $product->setcost($content->Cost);
-			 $packingweight = ceil($content->Weight);
-			 $product->setweight($packingweight);
-			 
-			 // get shipping starts
-			 $shippingrate = getshipping($packingweight);
-			 $product->setshprate($shippingrate);	 
-			 // get shipping ends
+			 $product->setweight(ceil($content->Weight));
 			 
 			 if($content->Inventory == "")
 			 $stock=0;

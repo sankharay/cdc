@@ -3,10 +3,12 @@
 	ini_set('display_errors',1);
 	error_reporting(E_ALL);
 	require_once('../dbw.php');
+
+
 	require_once('../urls.php');
 	require_once('Mfunctions.php');
 	// $fpl_id = $_GET['fpl_id'];
-	$result = true;
+	$result = TRUE;
 	
 	if($result == TRUE)
 	{
@@ -29,6 +31,7 @@
 			echo "<pre>";
 			print_r($templatestructure);
 			echo "</pre>";
+
 			$datareplacearray = array (
 					'product_sku' => 'sku',
 					'product_upc' => 'upc',
@@ -110,13 +113,13 @@
 			{
 			 $product->setPrice($content['product_retail']);
 			}
-			if(in_array('product_inventory_level',$tempstructurearray))
+			if(in_array('product_qty',$tempstructurearray))
 			{
-			if($content['product_inventory_level'] > 0 AND is_numeric($content['product_inventory_level']))
+			if($content['product_qty'] > 0 AND is_numeric($content['product_qty']) AND $content['product_qty'] != "")
 			{
-			 $product->setStockData(array('is_in_stock' => 1, 'qty' => $content['product_inventory_level']));
+			 $product->setStockData(array('is_in_stock' => 1, 'qty' => $content['product_qty']));
 			}
-			else
+			elseif($content['product_qty'] == "0")
 			{
 			$product->setStockData(array('is_in_stock' => 0, 'qty' => 0));
 			$product->setVisibility(1);
@@ -177,12 +180,12 @@
 			
 			
 			
-			 // try to save start
+			 // try to save start trim($content['product_sku'])
 			 try {
 				$product->save();
-				$dataprocessed = updateapimater_table_status($content['product_sku']);
+				$dataprocessed = updateapimater_table_status(trim($content['product_sku']));
 echo $content['product_sku']." Updated<br>";
-sleep(2);
+
 			 	} catch (Exception $ex) {
 				echo $ex->getMessage();
 			}

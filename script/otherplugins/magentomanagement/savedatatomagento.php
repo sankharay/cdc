@@ -109,7 +109,7 @@ call_user_func_array(array($product, "$vass"), array("$setvalue"));
 
 $newurl = htmlspecialchars_decode($content->prduct_name,ENT_QUOTES);
 $creaturl = cleaningdata($newurl);
-$strlower = strtolower($creaturl);
+$strlower = trim(strtolower($creaturl));
 $url = str_replace(" ","-",$strlower);
 $url = $url.".html";
 $url = checkurlstatus($url);
@@ -293,7 +293,19 @@ $url = str_replace(".html","","$url");
 			 $product->setDescription(htmlspecialchars_decode($product_description,ENT_QUOTES));
 			 $product->settv_brand($content->product_brand);
 			 $product->setvendorid($content->product_source);
-			 $product_specs = str_replace($search, $values, $content->product_specs);
+			 // $product_specs = str_replace($search, $values, $content->product_specs);
+
+			if($content->product_disclaimer != "")
+			 {
+			 $disclaimer = htmlspecialchars(get_disclaimer($content->product_disclaimer));
+			 $specificationsdata = $content->product_specs."<br>".$disclaimer;
+			 }
+			 else
+			 {
+			 $specificationsdata = $content->product_specs;
+			 }
+			 $product_specs = str_replace($search, $values, $specificationsdata);
+
 			 $product->setspec001(htmlspecialchars_decode($product_specs,ENT_QUOTES));
 			 $eng_video = str_replace($search, $values, $content->eng_video);
 			 $product->setproductvideo(htmlspecialchars_decode($eng_video,ENT_QUOTES));
@@ -303,6 +315,10 @@ $url = str_replace(".html","","$url");
 			 $product->setStockData(array('is_in_stock' => 1, 'qty' => $stock));
 			 $product->setstatus("1");
 
+			 
+			 $product->setonline_only($content->onlineonly);
+			 
+			 $product->setSet($content->isset);
 
 
 			 // print_r($product);

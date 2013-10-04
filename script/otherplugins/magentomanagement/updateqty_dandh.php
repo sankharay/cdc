@@ -45,11 +45,22 @@
 			}
 			else
 			{
+			if($content->fromdate == "" AND $content->todate == "" AND $content->specialprice == "")
+			{
 			$stockData = $product->getStockData();
 			$stockData['qty'] = "0";
 			$stockData['is_in_stock'] = 0;
 			$product->setVisibility(1);
 			$product->setStatus(2);
+			}
+			else
+			{
+			$stockData = $product->getStockData();
+			$stockData['qty'] = $content->qty;
+			$stockData['is_in_stock'] = 1;
+			$product->setVisibility(4);
+			$product->setStatus(1);
+			}
 			}
 			$product->setStockData($stockData);
 			}

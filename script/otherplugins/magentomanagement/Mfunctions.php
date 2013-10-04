@@ -385,7 +385,7 @@ curl_close($curl);
 if($status['http_code'] == '200')
 {
 $number = $i+1;
-$replacewith = "2-".$number.".html";
+$replacewith = $number."-3.html";
 $keys = str_replace('.html',"$replacewith",$key);
 return checkurlstatus($keys);
 }
@@ -523,6 +523,62 @@ function updateapimater_table_status($sku)
 echo "UPDATE `update_queue_masterproducttable` SET `status`=2 where `product_sku`='$sku'";
 $myquery = mysql_query("UPDATE `update_queue_masterproducttable` SET `status`=2 where `product_sku`='$sku'");
 return TRUE;
+}
+function get_mossee_data()
+{
+$myquery = mysql_query("select * from direct_mosse_products WHERE  `status`='1'");
+return $myquery;
+}
+
+function update_mossie_status($sku)
+{
+$mysqlupdate = mysql_query("UPDATE `direct_mosse_products` SET `status`='2' WHERE `SKU`='$sku'");
+return TRUE;
+}
+
+function update_mossie_statuss($sku)
+{
+$mysqlupdate = mysql_query("UPDATE `direct_mosse_products` SET `status`='3' WHERE `SKU`='$sku'");
+return TRUE;
+}
+function get_mossee_translation_data()
+{
+$myquery = mysql_query("SELECT * FROM `direct_mosse_products` WHERE `status`=1")or die("Error in :" . mysql_error());
+return $myquery;
+}
+
+function updatespanishdata($spname,$description,$productspecs,$sku)
+{
+echo "UPDATE `direct_mosse_products` SET `spanish_Product_Name`='$spname',`spanish_Product_Description`='$description',`spanish_specification`='$productspecs' WHERE `SKU`='$sku'";
+$mysqlupdate = mysql_query("UPDATE `direct_mosse_products` SET `spanish_Product_Name`='$spname',`spanish_Product_Description`='$description',`spanish_specification`='$productspecs' WHERE `SKU`='$sku'");
+return TRUE;
+}
+function get_mossee_data_puretext()
+{
+$myquery = mysql_query("select * from direct_mosse_products WHERE `status`=2");
+return $myquery;
+}
+function getshipping($weight)
+{
+$shippingfirst = "9.99";
+$shippingsecond = "19.99";
+$shippingthird = "29.99";
+$shippingfourth = "39.99";
+$shippingfive = "49.99";
+$shippingsixth = "Domestic";
+
+if($weight < 10)
+return $shippingfirst;
+elseif($weight >= 10 AND $weight < 20)
+return $shippingsecond;
+elseif($weight >= 20 AND $weight < 30)
+return $shippingthird;
+elseif($weight >= 30 AND $weight < 40)
+return $shippingfourth;
+elseif($weight >= 40 AND $weight < 69 )
+return $shippingfive;
+elseif($weight >= 69)
+return $shippingsixth;	
 }
 
 ?>
