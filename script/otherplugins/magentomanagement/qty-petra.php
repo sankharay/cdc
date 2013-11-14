@@ -30,20 +30,17 @@
         $currentStore = Mage::app()->getStore()->getId();
 	Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 			$contents = get_qty_data_petra_datas();
+
 			while($content = mysql_fetch_object($contents))
 			{
 			// echo $content->sku." ".$content->qty."<br>";
 
-			$datas = mysql_query("select * from api_magento_all_products where sku='$content->sku'");
-			if(mysql_num_rows($datas) > 0 )
-			{
         	$product_id = Mage::getModel('catalog/product')->getIdBySku(trim($content->sku));
 			if($product_id)
 			{
 			// set URL key start
 
 			echo $content->sku." ".$content->qty."<br>";
-
 			$product = Mage::getModel('catalog/product');
 			$product->load($product_id);
 			$qqty = trim($content->qty);
@@ -68,8 +65,6 @@
 			 // try to save start
 			 try {
 				$product->save();
-				$datafur = mysql_query("UPDATE `directmagento_petrainventry_12sept` SET `status`=2 WHERE `sku`='$content->sku'");
-// exit;
 			 	} catch (Exception $ex) {
 				echo $ex->getMessage();
 			}
@@ -82,8 +77,5 @@
 			}
 
 			}
-			$datafur = mysql_query("UPDATE `directmagento_petrainventry_12sept` SET `status`=3 WHERE `sku`='$content->sku'");
-				
 			}
-	}
 ?>
