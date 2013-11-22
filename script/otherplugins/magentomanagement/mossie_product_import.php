@@ -101,7 +101,7 @@
 			$creaturl = cleaningdata($newurl);
 			$strlower = strtolower($creaturl);
 			$url = str_replace(" ","-",$strlower);
-			$url = $url."-3.html";
+			$url = $url.".html";
 			$url = checkurlstatus($url);
 			$url = str_replace(".html","","$url");
 
@@ -129,7 +129,7 @@ $productspecs = htmlspecialchars($productspecs);
 }
 
 			 $product_specs = str_replace($search, $values, $productspecs);
-			 $product->setspec001(htmlspecialchars_decode($product_specs,ENT_QUOTES));
+			 $product->setspec001(htmlspecialchars_decode($productspecs,ENT_QUOTES));
 			 
 
 			if($content->Video_Link != "")
@@ -141,7 +141,7 @@ $productspecs = htmlspecialchars($productspecs);
 
 			 
 			$retailprice = floatval($content->Cost)*2;
-			$dropship = "0";
+			$dropship = "5.50";
 			$retailprice = ceil($retailprice+$dropship);
 			$retailprice = $retailprice - 0.01;
 			 
@@ -170,8 +170,7 @@ $productspecs = htmlspecialchars($productspecs);
 				
 				$product->save();
 				$processingdone = update_mossie_status($content->SKU);
-				echo "Import Done".$sku;
-	
+				echo "Import Done".$sku;	
 			/* add spanish data
 			$productId = Mage::getModel('catalog/product')->getIdBySku($content->SKU);
 			if($content->spanish_Product_Description != "")

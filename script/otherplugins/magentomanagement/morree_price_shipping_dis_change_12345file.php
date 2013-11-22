@@ -57,16 +57,15 @@
 			// reset disclaimer
 			if($content->Size != "")
 			{
-			$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pound</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+			$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pound</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 			$productspecs = htmlspecialchars($productspecs);
 			}
 			else
 			{
-			$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pound</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+			$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pound</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 			$productspecs = htmlspecialchars($productspecs);
 			}
-			 echo $product_specs = str_replace($search, $values, $productspecs);
-
+			 $product_specs = str_replace($search, $values, $productspecs);
 			 $product->setspec001(htmlspecialchars_decode($productspecs,ENT_QUOTES));
 			// reset disclaimer
 			// set vendor id
@@ -78,7 +77,7 @@
 				$product->save();
 				$processingdone = mysql_query("update `direct_mosse_pricechange1234_file` SET status=2 WHERE sku='$content->SKU'");
 				echo $sku."<br>";
-exit;
+
 			}
 			catch (Exception $ex) {
 				echo $ex->getMessage();

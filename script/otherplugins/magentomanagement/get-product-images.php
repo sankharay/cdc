@@ -32,11 +32,11 @@ $data = array();
 	Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 
 
-			$contents = mysql_query("select * from direct_mosse_products");
+			$contents = mysql_query("select * from direct_mossee_img_find");
 			while($content = mysql_fetch_object($contents))
 			{
 
-        	$product_id = Mage::getModel('catalog/product')->getIdBySku(trim($content->SKU));
+        	$product_id = Mage::getModel('catalog/product')->getIdBySku(trim($content->sku));
 			if($product_id)
 			{
 			// set URL key start
@@ -49,7 +49,7 @@ $data = array();
 			foreach($mediaApiItems as $item) {
 				$filedata.= "https://www.icuracao.com/media/catalog/product/".$item['file'].",";
 			}
-			$data[] = array("Product ID"=>$product->getid(),"Product Sku"=>$product->getSku(),"Product Images"=>$filedata,"Product Vendor ID"=>$product->getvendorid());
+			$data[] = array("Product Sku"=>$product->getSku(),"Product Images"=>$filedata);
 			}
 			}
 			}
