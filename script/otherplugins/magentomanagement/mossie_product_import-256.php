@@ -18,13 +18,13 @@
 	Mage::app('default'); 
         $currentStore = Mage::app()->getStore()->getId();
 	Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
-			$contents = get_mossee_data();
+			$contents = mysql_query("SELECT * FROM `direct_mosse_products_256` WHERE `status`=1");
 			while($content = mysql_fetch_object($contents))
 			{
         	$magentoproductIds = Mage::getModel('catalog/product')->loadByAttribute('sku',trim($content->SKU));
 			if($magentoproductIds)
 			{
-				$processingdone = update_mossie_statuss(trim($content->SKU));
+			$productalready_there = mysql_query("UPDATE `direct_mosse_products_256` SET `status`='3' WHERE `SKU`='$content->SKU'");
 			echo "product already there".$content->SKU."<br>";	
 			}
 			else
@@ -53,7 +53,7 @@
 					//if(file_exists(trim($img[$i]))){
 					//echo 'here';
 						if(!@file_get_contents($img[$i])){
-							$noimageentry = mysql_query("UPDATE `direct_mosse_products` SET `spanish_Product_Name`='5' WHERE `SKU`='$content->SKU'");
+							$noimageentry = mysql_query("UPDATE `direct_mosse_products_256` SET `spanish_Product_Name`='5' WHERE `SKU`='$content->SKU'");
 
 						}
 						else
@@ -101,7 +101,7 @@
 			$creaturl = cleaningdata($newurl);
 			$strlower = strtolower($creaturl);
 			$url = str_replace(" ","-",$strlower);
-			$url = $url."-3.html";
+			$url = $url."-4.html";
 			$url = checkurlstatus($url);
 			$url = str_replace(".html","","$url");
 
@@ -119,12 +119,12 @@
 			$product->setvendorid($content->source);
 if($content->Size != "")
 {
-$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+$productspecs = "<ul><li>Size: ".$content->Size."</li><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br> <br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 $productspecs = htmlspecialchars($productspecs);
 }
 else
 {
-$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. Curacao® is not responsible for the improper use of licensed costumes.</div>";
+$productspecs = "<ul><li>Shipping Dimensions: ".$content->Dimensions_Height." H x ".$content->Dimensions_Width." W x ".$content->Dimensions_Depth." L </li><li>Shipping Weight: ".ceil($content->Weight)." Pounds</li></ul><br><br> <div id='detail_shipping'>*Not intended for commercial use. CuracaoÂ® is not responsible for the improper use of licensed costumes.</div>";
 $productspecs = htmlspecialchars($productspecs);
 }
 
@@ -169,25 +169,9 @@ $productspecs = htmlspecialchars($productspecs);
  			try {
 				
 				$product->save();
-				$processingdone = update_mossie_status($content->SKU);
+				$updateproduct_successfully = mysql_query("UPDATE `direct_mosse_products_256` SET `status`='2' WHERE `SKU`='$content->SKU'");
 				echo "Import Done".$sku;
-	
-			/* add spanish data
-			$productId = Mage::getModel('catalog/product')->getIdBySku($content->SKU);
-			if($content->spanish_Product_Description != "")
-			{
-			$product = Mage::getModel('catalog/product');
-			$productId = $product->getIdBySku($content->SKU);
-			$product->setStoreId(3)->load($productId);
-			
-			$product->setName($content->spanish_Product_Name);
-			$short_description = str_replace($search, $values, $content->spanish_Product_Description);
-			$product->setShortDescription(htmlspecialchars_decode($short_description,ENT_QUOTES));
-			$product_description = str_replace($search, $values, $content->spanish_Product_Description);
-			$product->setDescription(htmlspecialchars_decode($product_description,ENT_QUOTES));
-			$product->save();
-			} */
-			// add spanish data
+
 			}
 			catch (Exception $ex) {
 				echo $ex->getMessage();

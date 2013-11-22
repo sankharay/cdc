@@ -257,7 +257,7 @@ return $myquery;
 
 function get_qty_data_petra_datas()
 {
-$myquery = mysql_query("select * from directmagento_petrainventry_12sept");
+$myquery = mysql_query("select * from directmagento_petrainventry_12sept where status=1");
 return $myquery;
 }
 
@@ -385,7 +385,7 @@ curl_close($curl);
 if($status['http_code'] == '200')
 {
 $number = $i+1;
-$replacewith = $number."-3.html";
+$replacewith = $number."-1.html";
 $keys = str_replace('.html',"$replacewith",$key);
 return checkurlstatus($keys);
 }
@@ -483,7 +483,13 @@ return $myquery;
 
 function updatedatainventryid($sku)
 {
-$myquery = mysql_query("UPDATE `api_inventry` SET `status`=2 where `sku`='$sku'");
+$myquery = mysql_query("UPDATE cdc.`api_inventry` SET `status`=2 where `sku`='$sku'");
+return $myquery;
+}
+
+function updatedatainventryids($sku)
+{
+$myquery = mysql_query("UPDATE cdc.`api_inventry` SET `status`=3 where `sku`='$sku'") or die(mysql_error());
 return $myquery;
 }
 
@@ -520,7 +526,7 @@ return $templatedada->template_dbstructure;
 
 function updateapimater_table_status($sku)
 {
-echo "UPDATE `update_queue_masterproducttable` SET `status`=2 where `product_sku`='$sku'";
+// echo "UPDATE `update_queue_masterproducttable` SET `status`=2 where `product_sku`='$sku'";
 $myquery = mysql_query("UPDATE `update_queue_masterproducttable` SET `status`=2 where `product_sku`='$sku'");
 return TRUE;
 }
@@ -579,6 +585,28 @@ elseif($weight >= 40 AND $weight < 69 )
 return $shippingfive;
 elseif($weight >= 69)
 return $shippingsixth;	
+}
+
+function get_vendorid($vendorid)
+{
+$template = mysql_query("select * from vendormanagement where vmID=$vendorid");
+$templatedada = mysql_fetch_object($template);
+return $templatedada->vendorID;
+}
+
+
+function checkskuinmagento($sku)
+{
+$mysqliconnect = mysql_connect("192.168.100.121","curacaodata","curacaodata");
+$database = mysql_select_db("curacao_magento");
+$result1 = mysql_query("SELECT * FROM curacao_magento.`catalog_product_entity` WHERE `sku`='$sku'") or die(mysql_error());
+if(mysql_num_rows($result1) > 0)
+{
+return TRUE;
+}
+else
+return FALSE;
+mysql_close($mysqliconnect);
 }
 
 ?>

@@ -2,21 +2,11 @@
 	ini_set('max_execution_time', 3000);
 	ini_set('display_errors',1);
 	error_reporting(E_ALL);
-	require_once('../dbw.php');
-	require_once('../urls.php');
-	require_once('Mfunctions.php');
+	require_once('../../dbw.php');
+	require_once('../../urls.php');
+	require_once('../Mfunctions.php');
 	// $fpl_id = $_GET['fpl_id'];
 	$result = true;
-	
-	// removing special Character data strt
-			$list = get_html_translation_table(HTML_ENTITIES);
-			unset($list['"']);
-			unset($list['<']);
-			unset($list['>']);
-			unset($list['&']);		
-			$search = array_keys($list);
-			$values = array_values($list);
-			// removing special Character data end
 	
 	if($result == TRUE)
 	{
@@ -29,28 +19,25 @@
 	Mage::app('default'); 
         $currentStore = Mage::app()->getStore()->getId();
 	Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
-			$contents = get_qty_data_petra_datas();
+			$contents = mysql_query("SELECT * FROM `direct_dorel_qty` WHERE `status`=1 ORDER BY `id` DESC");
+
 			while($content = mysql_fetch_object($contents))
 			{
 			// echo $content->sku." ".$content->qty."<br>";
 
-			$datas = mysql_query("select * from api_magento_all_products where sku='$content->sku'");
-			if(mysql_num_rows($datas) > 0 )
-			{
         	$product_id = Mage::getModel('catalog/product')->getIdBySku(trim($content->sku));
 			if($product_id)
 			{
 			// set URL key start
-
-			echo $content->sku." ".$content->qty."<br>";
-
+			
+			echo $content->sku."<br>";
 			$product = Mage::getModel('catalog/product');
 			$product->load($product_id);
-			$qqty = trim($content->qty);
-			if($qqty != "0")
+			$qtyStock = trim($content->qty);
+			if($qtyStock > 0 )
 			{
 			$stockData = $product->getStockData();
-			$stockData['qty'] = $qqty;
+			$stockData['qty'] = $qtyStock;
 			$stockData['is_in_stock'] = 1;
 			$product->setVisibility(4);
 			$product->setStatus(1);
@@ -58,7 +45,7 @@
 			else
 			{
 			$stockData = $product->getStockData();
-			$stockData['qty'] = "0";
+			$stockData['qty'] = $qtyStock;
 			$stockData['is_in_stock'] = 0;
 			$product->setVisibility(1);
 			$product->setStatus(2);
@@ -68,8 +55,8 @@
 			 // try to save start
 			 try {
 				$product->save();
-				$datafur = mysql_query("UPDATE `directmagento_petrainventry_12sept` SET `status`=2 WHERE `sku`='$content->sku'");
-// exit;
+				$update = mysql_query("UPDATE `direct_dorel_qty` SET `status`=2 WHERE `sku`='$content->sku'");
+
 			 	} catch (Exception $ex) {
 				echo $ex->getMessage();
 			}
@@ -78,12 +65,10 @@
 			}
 			else
 			{
+			$update = mysql_query("UPDATE `direct_dorel_qty` SET `status`=3 WHERE `sku`='$content->sku'");
 			echo $content->sku." Not Found<br>";
 			}
 
 			}
-			$datafur = mysql_query("UPDATE `directmagento_petrainventry_12sept` SET `status`=3 WHERE `sku`='$content->sku'");
-				
 			}
-	}
 ?>
